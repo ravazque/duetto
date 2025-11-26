@@ -25,9 +25,12 @@ const Card = ({ card, onSelect, canFlip }) => {
   // Determinar la clase de estado para animaciones
   const stateClass = card.state === 'ready-to-flip' ? 'flipped' : card.state;
 
+  // Las cartas previamente volteadas deben mantener el estado flipped (excepto si están resetting)
+  const actualStateClass = card.state === 'resetting' ? 'resetting' : (card.previouslyFlipped ? 'flipped' : stateClass);
+
   return (
     <div
-      className={`card ${stateClass} ${card.type} ${card.previouslyFlipped ? 'previously-flipped' : ''} ${canFlip ? 'can-flip' : ''}`}
+      className={`card ${actualStateClass} ${card.type} ${card.state !== 'resetting' && card.previouslyFlipped ? 'previously-flipped' : ''} ${canFlip || card.previouslyFlipped ? 'can-flip' : ''}`}
       onClick={handleClick}
     >
       <div className="card-inner">

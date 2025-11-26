@@ -75,39 +75,7 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
     setEditingImages(updated);
   };
 
-  const handleAddWordCard = () => {
-    // Buscar el máximo número de ID para evitar duplicados
-    const maxId = editingWords.reduce((max, card) => {
-      const num = parseInt(card.id.replace('w', ''));
-      return num > max ? num : max;
-    }, 0);
-    const newId = `w${maxId + 1}`;
-    const newWord = { id: newId, type: 'word', content: 'NUEVA', state: 'faceDown' };
-    setEditingWords([...editingWords, newWord]);
-  };
-
-  const handleAddImageCard = () => {
-    // Buscar el máximo número de ID para evitar duplicados
-    const maxId = editingImages.reduce((max, card) => {
-      const num = parseInt(card.id.replace('i', ''));
-      return num > max ? num : max;
-    }, 0);
-    const newImageId = `i${maxId + 1}`;
-    const newImage = { id: newImageId, type: 'image', content: '❓', imageData: null, state: 'faceDown' };
-    setEditingImages([...editingImages, newImage]);
-  };
-
-  const handleRemoveWordCard = (index) => {
-    if (editingWords.length > 1) {
-      setEditingWords(editingWords.filter((_, i) => i !== index));
-    }
-  };
-
-  const handleRemoveImageCard = (index) => {
-    if (editingImages.length > 1) {
-      setEditingImages(editingImages.filter((_, i) => i !== index));
-    }
-  };
+  // Funciones de añadir/eliminar cartas eliminadas - los mazos siempre tienen 44 cartas
 
   const handleSave = () => {
     onUpdateCards(editingWords, editingImages);
@@ -144,15 +112,7 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
             </button>
           </div>
 
-          <div className="config-info">
-            <p><strong>Cartas en este mazo:</strong> {activeTab === 'words' ? editingWords.length : editingImages.length}</p>
-            <button
-              className="btn-add"
-              onClick={activeTab === 'words' ? handleAddWordCard : handleAddImageCard}
-            >
-              + Agregar carta
-            </button>
-          </div>
+
 
           <div className="cards-editor">
             {activeTab === 'words' ? (
@@ -167,13 +127,6 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
                       className="card-input"
                       placeholder="PALABRA"
                     />
-                    <button
-                      className="btn-remove"
-                      onClick={() => handleRemoveWordCard(index)}
-                      disabled={editingWords.length <= 1}
-                    >
-                      🗑️
-                    </button>
                   </div>
                 ))}
               </div>
@@ -223,14 +176,6 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
                         </label>
                       </>
                     )}
-
-                    <button
-                      className="btn-remove"
-                      onClick={() => handleRemoveImageCard(index)}
-                      disabled={editingImages.length <= 1}
-                    >
-                      🗑️
-                    </button>
                   </div>
                 ))}
               </div>

@@ -82,7 +82,7 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "✅ ¡Ejecutable subido exitosamente!" -ForegroundColor Green
     Write-Host ""
     Write-Host "🔗 Disponible en:" -ForegroundColor Cyan
-    Write-Host "   https://github.com/ravazque/projection-charts/releases/tag/v1.0.0" -ForegroundColor White
+    Write-Host "   https://github.com/ravazque/duetto/releases/tag/v1.0.0" -ForegroundColor White
     Write-Host ""
     Write-Host "📥 Los usuarios de Windows podrán descargarlo directamente desde el release" -ForegroundColor Green
 } else {

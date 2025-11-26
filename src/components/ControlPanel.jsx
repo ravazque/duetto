@@ -12,8 +12,10 @@ import './ControlPanel.css';
  * - onFlipSelected: función para voltear cartas seleccionadas
  * - onReset: función para reiniciar todas las cartas
  * - onOpenConfig: función para abrir configuración
+ * - darkMode: estado del modo oscuro
+ * - onToggleDarkMode: función para cambiar modo oscuro
  */
-const ControlPanel = ({ selectedWords, selectedImages, selectedCount, flippedWords, flippedImages, onFlipSelected, onReset, onOpenConfig }) => {
+const ControlPanel = ({ selectedWords, selectedImages, selectedCount, flippedWords, flippedImages, onFlipSelected, onReset, onOpenConfig, darkMode, onToggleDarkMode }) => {
   return (
     <div className="control-panel">
       <div className="control-row">
@@ -59,6 +61,14 @@ const ControlPanel = ({ selectedWords, selectedImages, selectedCount, flippedWor
             onClick={onOpenConfig}
           >
             ⚙️ Configurar
+          </button>
+
+          <button
+            className="btn btn-theme"
+            onClick={onToggleDarkMode}
+            title={darkMode ? "Modo claro" : "Modo oscuro"}
+          >
+            {darkMode ? '☀️' : '🌙'}
           </button>
         </div>
       </div>
