@@ -10,26 +10,30 @@ import './Deck.css';
  * - cards: array de cartas
  * - onCardSelect: función para manejar selección
  * - resetScroll: trigger para resetear scroll al inicio
+ * - deckGridRef: ref externa para el scroll del deck
+ * - canFlipCards: flag que indica si las cartas pueden voltearse
  */
-const Deck = ({ title, cards, onCardSelect, resetScroll }) => {
-  const deckGridRef = useRef(null);
+const Deck = ({ title, cards, onCardSelect, resetScroll, deckGridRef, canFlipCards }) => {
+  const localDeckGridRef = useRef(null);
+  const gridRef = deckGridRef || localDeckGridRef;
 
   // Resetear scroll al inicio cuando se revelan cartas
   useEffect(() => {
-    if (resetScroll && deckGridRef.current) {
-      deckGridRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    if (resetScroll && gridRef.current) {
+      gridRef.current.scrollTo({ left: 0, behavior: 'smooth' });
     }
-  }, [resetScroll]);
+  }, [resetScroll, gridRef]);
 
   return (
     <div className="deck">
       <h2 className="deck-title">{title}</h2>
-      <div className="deck-grid" ref={deckGridRef}>
+      <div className="deck-grid" ref={gridRef}>
         {cards.map((card) => (
           <Card
             key={card.id}
             card={card}
             onSelect={onCardSelect}
+            canFlip={canFlipCards}
           />
         ))}
       </div>

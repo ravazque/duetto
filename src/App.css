@@ -9,6 +9,15 @@
   text-align: center;
   margin-bottom: 20px;
   padding: 30px 20px 10px 20px;
+  position: relative;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
 }
 
 .app-header h1 {
@@ -17,6 +26,36 @@
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   font-weight: bold;
   letter-spacing: 2px;
+}
+
+.theme-toggle {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #212a38 0%, #223d56 50%, #360e4a 100%);
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:hover {
+  border-color: rgba(0, 0, 0, 0.7);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle:active {
+  transform: translateY(-50%) scale(0.95);
 }
 
 .app-subtitle {
@@ -37,7 +76,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 30px;
-  margin-bottom: 40px;
+  margin-bottom: 1px;
   padding: 0 20px;
   max-width: 100%;
   overflow-x: hidden;
@@ -83,4 +122,219 @@
     padding: 10px 15px;
     line-height: 1.6;
   }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    right: 10px;
+  }
+}
+
+/* ============================================
+   MODO OSCURO
+   ============================================ */
+
+body.dark-mode {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* Botón de tema en modo oscuro */
+.dark-mode .theme-toggle {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode .theme-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Deck en modo oscuro */
+.dark-mode .deck {
+  background: rgba(30, 30, 50, 0.6);
+  border-color: rgba(100, 100, 150, 0.3);
+}
+
+.dark-mode .deck-title {
+  color: #e0e0ff;
+}
+
+/* Cartas en modo oscuro */
+.dark-mode .card-front {
+  background: #2a2a3e;
+  color: #ffffff;
+}
+
+.dark-mode .card-word {
+  color: #ffffff;
+}
+
+.dark-mode .card-back {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+/* Panel de control en modo oscuro */
+.dark-mode .control-panel {
+  background: rgba(30, 30, 50, 0.4);
+  border: 1px solid rgba(100, 100, 150, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  margin: 0 20px 20px 20px;
+  padding: 15px 20px 20px 20px;
+}
+
+.dark-mode .control-panel h3 {
+  color: #e0e0ff;
+}
+
+.dark-mode .stats-grid {
+  color: #d0d0e0;
+}
+
+.dark-mode .stat-card {
+  background: rgba(50, 50, 70, 0.5);
+  border-color: rgba(100, 100, 150, 0.3);
+}
+
+.dark-mode .stat-label {
+  color: #b0b0d0;
+}
+
+.dark-mode .stat-value {
+  color: #e0e0ff;
+}
+
+/* Botones en modo oscuro */
+.dark-mode .btn {
+  background: #4a5568;
+  color: #ffffff;
+  border-color: #5a6578;
+}
+
+.dark-mode .btn:hover:not(:disabled) {
+  background: #5a6578;
+  border-color: #6a7588;
+}
+
+.dark-mode .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.dark-mode .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3d8f 100%);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.dark-mode .btn-secondary {
+  background: #5a6578;
+}
+
+.dark-mode .btn-secondary:hover:not(:disabled) {
+  background: #6a7588;
+}
+
+/* Configurador en modo oscuro */
+.dark-mode .config-panel {
+  background: #2a2a3e;
+  border: 1px solid #4a4a6e;
+}
+
+.dark-mode .config-header {
+  border-bottom-color: #4a4a6e;
+}
+
+.dark-mode .config-header h2 {
+  color: #a5b4fc;
+}
+
+.dark-mode .close-btn {
+  color: #b0b0d0;
+}
+
+.dark-mode .close-btn:hover {
+  background: #3a3a5e;
+  color: #e0e0ff;
+}
+
+.dark-mode .config-tabs {
+  border-bottom-color: #4a4a6e;
+}
+
+.dark-mode .tab {
+  color: #b0b0d0;
+}
+
+.dark-mode .tab:hover {
+  color: #a5b4fc;
+}
+
+.dark-mode .tab.active {
+  color: #a5b4fc;
+  border-bottom-color: #a5b4fc;
+}
+
+.dark-mode .config-info {
+  background: #3a3a5e;
+}
+
+.dark-mode .config-info p {
+  color: #e0e0ff;
+}
+
+.dark-mode .card-edit-row {
+  background: #3a3a5e;
+}
+
+.dark-mode .card-edit-row:hover {
+  background: #4a4a6e;
+}
+
+.dark-mode .card-number {
+  color: #a5b4fc;
+}
+
+.dark-mode .card-input {
+  background: #2a2a3e;
+  border-color: #4a4a6e;
+  color: #ffffff;
+}
+
+.dark-mode .card-input:focus {
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.2);
+}
+
+.dark-mode .image-preview-container {
+  background: #2a2a3e;
+  border-color: #4a4a6e;
+}
+
+.dark-mode .config-footer {
+  border-top-color: #4a4a6e;
+}
+
+/* Scrollbar en modo oscuro */
+.dark-mode .deck-grid::-webkit-scrollbar-track {
+  background: rgba(50, 50, 70, 0.3);
+}
+
+.dark-mode .deck-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: rgba(100, 100, 150, 0.3);
+}
+
+.dark-mode .cards-editor::-webkit-scrollbar-thumb,
+.dark-mode .config-body::-webkit-scrollbar-thumb {
+  background: #667eea;
+}
+
+.dark-mode .cards-editor::-webkit-scrollbar-thumb:hover,
+.dark-mode .config-body::-webkit-scrollbar-thumb:hover {
+  background: #5568d3;
+}
+
+.dark-mode .cards-editor::-webkit-scrollbar-track,
+.dark-mode .config-body::-webkit-scrollbar-track {
+  background: #2a2a3e;
 }

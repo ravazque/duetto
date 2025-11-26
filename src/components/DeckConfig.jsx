@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DeckConfig.css';
 
 /**
@@ -13,15 +13,45 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
   const [editingWords, setEditingWords] = useState(wordCards);
   const [editingImages, setEditingImages] = useState(imageCards);
 
+  // Sincronizar estados locales solo cuando se abra el modal (de cerrado a abierto)
+  useEffect(() => {
+    if (isOpen) {
+      setEditingWords([...wordCards]);
+      setEditingImages([...imageCards]);
+      setActiveTab('words'); // Resetear a tab de palabras al abrir
+    }
+  }, [isOpen]); // Solo depende de isOpen
+
   if (!isOpen) return null;
 
   const handleWordChange = (index, newContent) => {
+    // No permitir espacios en las palabras
+    if (newContent.includes(' ')) {
+      return;
+    }
+
+    // Limitar a 12 caracteres máximo por palabra individual
+    const validContent = newContent.length <= 10 ? newContent : editingWords[index].content;
+
     const updated = [...editingWords];
-    updated[index] = { ...updated[index], content: newContent };
+    updated[index] = { ...updated[index], content: validContent };
     setEditingWords(updated);
   };
 
   const handleImageChange = (index, newContent) => {
+    // No permitir espacios
+    if (newContent.includes(' ')) {
+      return;
+    }
+
+    // Convertir a array de caracteres/emojis Unicode
+    const chars = [...newContent];
+
+    // Solo permitir 1 carácter o emoticono
+    if (chars.length > 1) {
+      return;
+    }
+
     const updated = [...editingImages];
     updated[index] = { ...updated[index], content: newContent, imageData: null };
     setEditingImages(updated);
@@ -46,13 +76,23 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
   };
 
   const handleAddWordCard = () => {
-    const newId = `w${editingWords.length + 1}`;
+    // Buscar el máximo número de ID para evitar duplicados
+    const maxId = editingWords.reduce((max, card) => {
+      const num = parseInt(card.id.replace('w', ''));
+      return num > max ? num : max;
+    }, 0);
+    const newId = `w${maxId + 1}`;
     const newWord = { id: newId, type: 'word', content: 'NUEVA', state: 'faceDown' };
     setEditingWords([...editingWords, newWord]);
   };
 
   const handleAddImageCard = () => {
-    const newImageId = `i${editingImages.length + 1}`;
+    // Buscar el máximo número de ID para evitar duplicados
+    const maxId = editingImages.reduce((max, card) => {
+      const num = parseInt(card.id.replace('i', ''));
+      return num > max ? num : max;
+    }, 0);
+    const newImageId = `i${maxId + 1}`;
     const newImage = { id: newImageId, type: 'image', content: '❓', imageData: null, state: 'faceDown' };
     setEditingImages([...editingImages, newImage]);
   };
@@ -166,7 +206,12 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
                           placeholder="Emoji"
                           disabled={!!card.imageData}
                         />
-                        <span className="emoji-preview">{card.content}</span>
+                        <span className="emoji-preview">
+                          {card.content ? (
+                            // Extraer el primer emoji/carácter Unicode completo
+                            [...card.content][0] || ''
+                          ) : ''}
+                        </span>
                         <label className="btn-upload-image" title="Cargar imagen">
                           📷
                           <input

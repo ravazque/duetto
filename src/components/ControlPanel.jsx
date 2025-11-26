@@ -44,7 +44,7 @@ const ControlPanel = ({ selectedWords, selectedImages, selectedCount, flippedWor
             onClick={onFlipSelected}
             disabled={selectedCount === 0}
           >
-            ✨ Revelar las cartas
+            ✨ Revelar carta/s
           </button>
 
           <button

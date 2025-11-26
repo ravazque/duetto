@@ -31,6 +31,75 @@
   transform: rotateY(180deg);
 }
 
+/* Animación para voltear cartas boca abajo al resetear */
+.card.resetting .card-inner {
+  animation: flipToBack 0.6s ease-in-out forwards;
+}
+
+@keyframes flipToBack {
+  0% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Animaciones de deslizamiento smooth */
+
+/* Cartas recién seleccionadas: NO animan hasta tener can-flip */
+.card.flipped:not(.previously-flipped):not(.can-flip) {
+  z-index: 100;
+  position: relative;
+}
+
+/* Con can-flip: animación suave de elevación + volteo */
+.card.flipped:not(.previously-flipped).can-flip {
+  animation: smoothReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  z-index: 100;
+  position: relative;
+}
+
+/* Cartas ya volteadas previamente: no necesitan animación especial */
+.card.previously-flipped {
+  position: relative;
+}
+
+/* Animación: elevación suave sin teletransporte */
+@keyframes smoothReveal {
+  0% {
+    transform: scale(1.02) translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Las cartas recién volteadas NO se dan la vuelta hasta que tengan la clase can-flip */
+.card.flipped:not(.previously-flipped) .card-inner {
+  transform: rotateY(0deg); /* Inicialmente sin voltear */
+}
+
+/* Solo cuando tienen can-flip se voltean TODAS a la vez */
+.card.flipped:not(.previously-flipped).can-flip .card-inner {
+  animation: instantFlip 0.6s ease-in-out forwards;
+}
+
+@keyframes instantFlip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
 /* Caras de la carta */
 .card-back,
 .card-front {
@@ -81,11 +150,18 @@
 }
 
 .card-word {
-  font-size: 1.2rem;
   font-weight: bold;
   color: #333;
   text-align: center;
-  word-wrap: break-word;
+  overflow: hidden;
+  line-height: 1.3;
+  max-height: 100%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  word-break: break-word;
 }
 
 .card-image {
@@ -96,6 +172,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .card-image-img {
@@ -108,8 +185,8 @@
 /* Indicador de selección */
 .selection-indicator {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: 8px;
+  right: 8px;
   width: 35px;
   height: 35px;
   background: #4ade80;
