@@ -83,10 +83,3 @@ npm run preview  # Ver versión compilada
 
 **Pantalla en blanco**
 → Abre consola (F12) y verifica errores
-
----
-
-## 📞 Necesitas Más Info?
-
-- `README.md` - Documentación completa
-- `GUIA_DESARROLLO.md` - Cómo modificar código

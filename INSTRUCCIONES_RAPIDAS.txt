@@ -1,0 +1,68 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║           CARTAS PROYECTIVAS - INSTRUCCIONES RÁPIDAS              ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+📦 PRIMER USO:
+--------------
+1. Abrir terminal en esta carpeta
+2. Ejecutar: npm install
+3. Esperar a que termine (puede tardar 2-5 minutos)
+
+🖥️ EJECUTAR LA APLICACIÓN:
+--------------------------
+Opción A - Aplicación de Escritorio (RECOMENDADO):
+  npm run electron
+
+Opción B - En navegador web:
+  npm run dev
+
+🏗️ CREAR EJECUTABLE (.exe / .dmg / .AppImage):
+----------------------------------------------
+Windows:
+  npm run electron:build:win
+
+macOS:
+  npm run electron:build:mac
+
+Linux:
+  npm run electron:build:linux
+
+El ejecutable estará en la carpeta: release/
+
+💾 DATOS GUARDADOS AUTOMÁTICAMENTE:
+----------------------------------
+- Las cartas que agregues o modifiques se guardan automáticamente
+- No necesitas hacer nada, la app recuerda tus cambios
+
+⚙️ CONFIGURAR CARTAS:
+--------------------
+1. Abrir la aplicación
+2. Hacer clic en el botón "⚙️" (arriba a la derecha)
+3. Añadir, editar o eliminar cartas
+4. Guardar cambios
+
+🎴 USO BÁSICO:
+-------------
+1. Clic en cartas para seleccionarlas (aparece ✓ verde)
+2. Botón "Revelar" para voltear las seleccionadas
+3. Botón "Reiniciar / Mezclar" para empezar de nuevo
+
+📋 SISTEMA:
+----------
+- Se necesita Node.js instalado (versión 16 o superior)
+- Windows, macOS o Linux
+- Espacio en disco: ~2 GB para compilar ejecutables
+
+❓ PROBLEMAS:
+------------
+Si algo no funciona:
+1. Borrar carpeta node_modules
+2. Ejecutar: npm install --legacy-peer-deps
+3. Intentar de nuevo
+
+Para más ayuda, revisar: README.md
+
+╔═══════════════════════════════════════════════════════════════════╗
+║  ¡La aplicación ya está lista para usar!                          ║
+║  Ejecuta: npm run electron                                        ║
+╚═══════════════════════════════════════════════════════════════════╝

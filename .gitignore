@@ -13,8 +13,18 @@ dist
 dist-ssr
 *.local
 
+# Electron
+release
+build/*.png
+build/*.ico
+build/*.icns
+*.exe
+*.dmg
+*.AppImage
+
 # Editor
 .vscode/*
+.claude
 !.vscode/extensions.json
 .idea
 .DS_Store

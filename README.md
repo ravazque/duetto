@@ -1,12 +1,18 @@
-# 🎴 Cartas Proyectivas - Aplicación de Terapia
+# 🎴 Cartas Proyectivas - Aplicación de Escritorio
 
-Aplicación web para terapia con cartas proyectivas estilo OH Cards.
+Aplicación de escritorio para terapia con cartas proyectivas estilo OH Cards.
 
 ## 📋 Descripción del Proyecto
 
 Esta aplicación permite a terapeutas trabajar con cartas proyectivas digitales. Incluye dos mazos:
-- **Mazo de Palabras**: 88 cartas con palabras (8 de ejemplo en demo)
-- **Mazo de Imágenes**: 88 cartas con imágenes (8 de ejemplo en demo)
+- **Mazo de Palabras**: 44 cartas con palabras (88 total entre ambos mazos)
+- **Mazo de Imágenes**: 44 cartas con imágenes
+
+### ✨ Características Nuevas
+- **💾 Persistencia de datos**: Tus cartas personalizadas se guardan automáticamente
+- **🖥️ Aplicación de escritorio**: Funciona offline con Electron
+- **⚙️ Configuración flexible**: Añade, edita o elimina cartas desde la interfaz
+- **🔄 Mezcla aleatoria**: Baraja automáticamente al reiniciar
 
 ## 🚀 Inicio Rápido
 
@@ -15,26 +21,89 @@ Esta aplicación permite a terapeutas trabajar con cartas proyectivas digitales.
 ```bash
 # Instalar dependencias
 npm install
-
-# Iniciar servidor de desarrollo
-npm run dev
-
-# La aplicación se abrirá automáticamente en http://localhost:3000
 ```
 
-### Compilar para Producción
+### Modo Desarrollo Web
 
 ```bash
-npm run build
+# Iniciar servidor de desarrollo web
+npm run dev
+# Se abrirá automáticamente en http://localhost:3000
 ```
 
-Los archivos compilados estarán en la carpeta `dist/`.
+### Modo Electron (Aplicación de Escritorio)
+
+```bash
+# Ejecutar como aplicación de escritorio
+npm run electron
+```
+
+## 📦 Crear Ejecutable
+
+### Windows (.exe)
+```bash
+npm run electron:build:win
+```
+**Resultado**: `release/Cartas Proyectivas Setup 1.0.0.exe`
+
+### macOS (.dmg)
+```bash
+npm run electron:build:mac
+```
+**Resultado**: `release/Cartas Proyectivas-1.0.0.dmg`
+
+### Linux (.AppImage)
+```bash
+npm run electron:build:linux
+```
+**Resultado**: `release/Cartas Proyectivas-1.0.0.AppImage`
+
+### Todas las plataformas
+```bash
+npm run electron:build
+```
 
 ## 🎮 Cómo Usar la Aplicación
 
 1. **Seleccionar cartas**: Haz clic en las cartas que desees (aparecerá un ✓ verde)
-2. **Voltear**: Presiona el botón "Voltear Seleccionadas" para ver el contenido
-3. **Reiniciar**: Usa "Reiniciar Todo" para volver todas las cartas boca abajo
+2. **Voltear**: Presiona el botón "🎴 Revelar" para ver el contenido
+3. **Reiniciar**: Usa "🔄 Reiniciar / Mezclar" para barajar las cartas
+4. **Configurar**: Presiona "⚙️" para añadir, editar o eliminar cartas
+
+## 💾 Persistencia de Datos
+
+La aplicación guarda automáticamente:
+- ✅ Cartas personalizadas que agregues
+- ✅ Modificaciones a cartas existentes
+- ✅ Cantidad de cartas por mazo
+
+Los datos persisten entre sesiones de la aplicación.
+
+### Resetear Configuración
+
+Para volver a las cartas por defecto:
+1. Abre las **DevTools** (F12)
+2. Ve a **Application** > **Local Storage**
+3. Elimina las entradas `wordCards` e `imageCards`
+4. Recarga la aplicación
+
+## 📝 Comandos Disponibles
+
+| Comando | Descripción |
+|---------|-------------|
+| `npm run dev` | Servidor de desarrollo web (puerto 3000) |
+| `npm run build` | Compila la aplicación React para producción |
+| `npm run electron` | Ejecuta como aplicación de escritorio (desarrollo) |
+| `npm run electron:build` | Compila ejecutable para tu sistema operativo |
+| `npm run electron:build:win` | Compila ejecutable para Windows (.exe) |
+| `npm run electron:build:mac` | Compila ejecutable para macOS (.dmg) |
+| `npm run electron:build:linux` | Compila ejecutable para Linux (.AppImage) |
+
+## 🎨 Personalizar Ícono
+
+1. Crea un ícono PNG de **512x512 píxeles**
+2. Guárdalo como `build/icon.png`
+3. El ícono se usará automáticamente al compilar el ejecutable
 
 ## 📁 Estructura del Proyecto
 
@@ -209,12 +278,42 @@ Edita los gradientes en los archivos CSS:
 - ✅ Safari
 - ✅ Móviles iOS/Android
 
+## 🐛 Solución de Problemas
+
+### Electron no inicia
+- Asegúrate de que el **puerto 3000** esté libre
+- Verifica que todas las dependencias estén instaladas: `npm install`
+- Intenta eliminar `node_modules` y reinstalar: `rm -rf node_modules && npm install`
+
+### El build falla
+- Asegúrate de tener **espacio suficiente en disco** (1-2 GB)
+- En Windows, ejecuta la terminal **como administrador**
+- Verifica que el ícono `build/icon.png` exista (o elimina la referencia en `package.json`)
+
+### Los cambios no se guardan
+- Verifica que localStorage esté habilitado
+- Revisa la consola (F12) en busca de errores
+- Intenta limpiar localStorage y recargar
+
+### Error: "electron: command not found"
+```bash
+# Reinstala Electron
+npm install --save-dev electron@latest --legacy-peer-deps
+```
+
+### Error al compilar en Linux
+```bash
+# Instala dependencias del sistema
+sudo apt-get install -y libxtst6 libnss3
+```
+
 ## 🤝 Soporte
 
 Si tienes problemas:
-1. Revisa la consola del navegador (F12)
-2. Verifica que node_modules esté instalado
-3. Prueba con `npm install` de nuevo
+1. Revisa la consola del navegador/Electron (F12 o Ctrl+Shift+I)
+2. Verifica que node_modules esté instalado correctamente
+3. Prueba con `npm install --legacy-peer-deps` de nuevo
+4. Revisa los logs en la carpeta `.npm/_logs/`
 
 ## 📄 Licencia
 

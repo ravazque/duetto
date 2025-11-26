@@ -1,12 +1,19 @@
 {
   "name": "cartas-proyectivas",
   "private": true,
-  "version": "0.1.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "Aplicación de cartas proyectivas para consultas psicológicas",
+  "author": "Tu Nombre",
+  "main": "electron.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "cross-env NODE_ENV=development ELECTRON=true concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:build:win": "npm run build && electron-builder --win",
+    "electron:build:mac": "npm run build && electron-builder --mac",
+    "electron:build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -16,6 +23,37 @@
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8"
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^39.2.3",
+    "electron-builder": "^26.0.12",
+    "vite": "^5.0.8",
+    "wait-on": "^9.0.3"
+  },
+  "build": {
+    "appId": "com.cartasproyectivas.app",
+    "productName": "Cartas Proyectivas",
+    "files": [
+      "dist/**/*",
+      "electron.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icon.png"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "build/icon.png"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "build/icon.png",
+      "category": "Utility"
+    }
   }
 }
