@@ -41,7 +41,13 @@ const Card = ({ card, onSelect }) => {
           {card.type === 'word' ? (
             <div className="card-word">{card.content}</div>
           ) : (
-            <div className="card-image">{card.content}</div>
+            <div className="card-image">
+              {card.imageData ? (
+                <img src={card.imageData} alt="Carta" className="card-image-img" />
+              ) : (
+                card.content
+              )}
+            </div>
           )}
         </div>
       </div>

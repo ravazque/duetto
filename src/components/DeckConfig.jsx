@@ -23,7 +23,25 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
 
   const handleImageChange = (index, newContent) => {
     const updated = [...editingImages];
-    updated[index] = { ...updated[index], content: newContent };
+    updated[index] = { ...updated[index], content: newContent, imageData: null };
+    setEditingImages(updated);
+  };
+
+  const handleImageFileChange = (index, file) => {
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const updated = [...editingImages];
+        updated[index] = { ...updated[index], content: '', imageData: e.target.result };
+        setEditingImages(updated);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    const updated = [...editingImages];
+    updated[index] = { ...updated[index], content: '❓', imageData: null };
     setEditingImages(updated);
   };
 
@@ -35,7 +53,7 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
 
   const handleAddImageCard = () => {
     const newImageId = `i${editingImages.length + 1}`;
-    const newImage = { id: newImageId, type: 'image', content: '❓', state: 'faceDown' };
+    const newImage = { id: newImageId, type: 'image', content: '❓', imageData: null, state: 'faceDown' };
     setEditingImages([...editingImages, newImage]);
   };
 
@@ -122,16 +140,45 @@ const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) =
             ) : (
               <div className="cards-list">
                 {editingImages.map((card, index) => (
-                  <div key={card.id} className="card-edit-row">
+                  <div key={card.id} className="card-edit-row image-card-row">
                     <span className="card-number">{index + 1}</span>
-                    <input
-                      type="text"
-                      value={card.content}
-                      onChange={(e) => handleImageChange(index, e.target.value)}
-                      className="card-input card-input-emoji"
-                      placeholder="Emoji o URL"
-                    />
-                    <span className="emoji-preview">{card.content}</span>
+
+                    {card.imageData ? (
+                      // Modo imagen: mostrar preview y opción de eliminar
+                      <div className="image-preview-container">
+                        <img src={card.imageData} alt="Preview" className="image-preview" />
+                        <button
+                          className="btn-remove-image"
+                          onClick={() => handleRemoveImage(index)}
+                          title="Eliminar imagen"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ) : (
+                      // Modo emoji/texto: mostrar input y botón de carga
+                      <>
+                        <input
+                          type="text"
+                          value={card.content}
+                          onChange={(e) => handleImageChange(index, e.target.value)}
+                          className="card-input card-input-emoji"
+                          placeholder="Emoji"
+                          disabled={!!card.imageData}
+                        />
+                        <span className="emoji-preview">{card.content}</span>
+                        <label className="btn-upload-image" title="Cargar imagen">
+                          📷
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleImageFileChange(index, e.target.files[0])}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                      </>
+                    )}
+
                     <button
                       className="btn-remove"
                       onClick={() => handleRemoveImageCard(index)}

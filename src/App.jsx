@@ -50,7 +50,8 @@ function App() {
       const imagesToSave = images.map(card => ({
         id: card.id,
         type: card.type,
-        content: card.content
+        content: card.content,
+        imageData: card.imageData || null
       }));
 
       localStorage.setItem('wordCards', JSON.stringify(wordsToSave));
@@ -171,7 +172,7 @@ function App() {
     // Guardar inmediatamente la configuración actualizada
     try {
       localStorage.setItem('wordCards', JSON.stringify(updatedWords.map(c => ({ id: c.id, type: c.type, content: c.content }))));
-      localStorage.setItem('imageCards', JSON.stringify(updatedImages.map(c => ({ id: c.id, type: c.type, content: c.content }))));
+      localStorage.setItem('imageCards', JSON.stringify(updatedImages.map(c => ({ id: c.id, type: c.type, content: c.content, imageData: c.imageData || null }))));
     } catch (error) {
       console.error('Error guardando configuración:', error);
     }
