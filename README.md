@@ -4,9 +4,6 @@
 
 Duetto es una aplicación de escritorio que combina mazos de palabras e imágenes para facilitar procesos terapéuticos, exploración emocional y autoconocimiento, inspirada en las OH Cards.
 
-![Version](https://img.shields.io/badge/version-1.2.1-blue)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
-
 ---
 
 ## 📥 Descargar
@@ -100,7 +97,4 @@ Tan simple como eso. Sin complicaciones técnicas.
 
 ---
 
-**Duetto v1.2.1** | 2025
-
-*Herramienta para terapeutas, coaches y buscadores del autoconocimiento*
-
+**Duetto v1.3.1** | 2025

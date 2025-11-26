@@ -26,10 +26,9 @@
   transform-style: preserve-3d;
 }
 
-/* Animación para voltear cartas boca abajo al resetear - MÁXIMA PRIORIDAD */
-.card.resetting .card-inner {
-  animation: flipToBack 0.6s ease-in-out forwards !important;
-  transform: none !important;
+/* Cuando la carta está volteada Y tiene can-flip - mostrar contenido */
+.card.flipped.can-flip .card-inner {
+  transform: rotateY(180deg);
 }
 
 /* Las cartas previamente volteadas SIEMPRE deben estar volteadas - excepto cuando se resetean */
@@ -37,9 +36,9 @@
   transform: rotateY(180deg) !important;
 }
 
-/* Cuando la carta está volteada Y tiene can-flip - mostrar contenido */
-.card.flipped.can-flip .card-inner {
-  transform: rotateY(180deg);
+/* Animación para voltear cartas boca abajo al resetear - MÁXIMA PRIORIDAD */
+.card.resetting .card-inner {
+  animation: flipToBack 0.6s ease-in-out forwards !important;
 }
 
 @keyframes flipToBack {
