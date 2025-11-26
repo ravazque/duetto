@@ -1,0 +1,46 @@
+/* Reset y estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 0;
+  color: #333;
+  overflow-x: hidden;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  overflow-x: hidden;
+}
+
+/* Tipografía */
+h1, h2, h3 {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+/* Utilidades */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+}

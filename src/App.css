@@ -1,0 +1,86 @@
+.app {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 30px 20px 10px 20px;
+}
+
+.app-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.app-subtitle {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.15rem;
+  margin: 0 auto;
+  line-height: 1.8;
+  max-width: 900px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 25px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.decks-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 0 20px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 20px 15px 15px 15px;
+  }
+
+  .app-header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+
+  .app-subtitle {
+    font-size: 1rem;
+    max-width: 90%;
+    padding: 12px 20px;
+  }
+
+  .decks-container {
+    padding: 0 10px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 15px 10px 10px 10px;
+  }
+
+  .app-header h1 {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+  }
+
+  .app-subtitle {
+    font-size: 0.95rem;
+    max-width: 95%;
+    padding: 10px 15px;
+    line-height: 1.6;
+  }
+}

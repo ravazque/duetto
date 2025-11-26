@@ -1,0 +1,172 @@
+.control-panel {
+  background: transparent;
+  border-radius: 0;
+  padding: 0 20px 20px 20px;
+  margin-bottom: 20px;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.control-info {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.counter-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.counter-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.selected-count,
+.flipped-count {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.flipped-count {
+  background: rgba(74, 222, 128, 0.3);
+  border: 1px solid rgba(74, 222, 128, 0.5);
+}
+
+.control-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5568d3 0%, #63408b 100%);
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-secondary:hover {
+  background: #667eea;
+  color: white;
+}
+
+.btn-config {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-config:hover {
+  background: #f3f4f6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .control-panel {
+    padding: 0 15px 15px 15px;
+  }
+
+  .control-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .control-info {
+    gap: 15px;
+  }
+
+  .counter-label {
+    font-size: 0.85rem;
+  }
+
+  .selected-count,
+  .flipped-count {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+
+  .btn {
+    min-width: 100px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-panel {
+    padding: 0 10px 15px 10px;
+  }
+
+  .control-info {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .counter-group {
+    font-size: 0.8rem;
+  }
+
+  .control-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn {
+    flex: 1;
+    min-width: 80px;
+  }
+}
