@@ -1,8 +1,8 @@
-# 🪟 Compilar Ejecutable para Windows
+# 🪟 Compilar Duetto para Windows
 
 ## ✅ Verificación de Configuración
 
-**La configuración por defecto ya está correcta:**
+**La configuración por defecto de Duetto ya está correcta:**
 - ✅ 44 cartas en el mazo de Palabras
 - ✅ 44 cartas en el mazo de Imágenes
 - ✅ Sistema de guardado automático funcionando
@@ -51,7 +51,7 @@ Este proceso:
 Una vez completado, el ejecutable estará en:
 
 ```
-release/Cartas Proyectivas Setup 1.0.0.exe
+release/Duetto Setup 1.0.0.exe
 ```
 
 **Tamaño aproximado**: ~100-150 MB
@@ -62,7 +62,7 @@ release/Cartas Proyectivas Setup 1.0.0.exe
 
 1. Ve a: https://github.com/ravazque/projection-charts/releases/tag/v1.0.0
 2. Click en **Edit release**
-3. Arrastra el archivo `Cartas Proyectivas Setup 1.0.0.exe` a la sección de assets
+3. Arrastra el archivo `Duetto Setup 1.0.0.exe` a la sección de assets
 4. Click en **Update release**
 
 ### Opción 2: GitHub CLI (PowerShell)
@@ -77,7 +77,7 @@ winget install --id GitHub.cli
 gh auth login
 
 # Subir el ejecutable al release existente
-gh release upload v1.0.0 "release/Cartas Proyectivas Setup 1.0.0.exe"
+gh release upload v1.0.0 "release/Duetto Setup 1.0.0.exe"
 ```
 
 ## ✅ Verificar el Ejecutable

@@ -189,7 +189,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>🎴 Cartas Proyectivas 🎴</h1>
+        <h1>🎴 Duetto 🎴</h1>
         <p className="app-subtitle">
           Selecciona cartas de palabras e imágenes, revélalas y descubre su significado.
           <br />

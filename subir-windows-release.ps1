@@ -1,7 +1,7 @@
-# Script PowerShell para subir el ejecutable de Windows al release de GitHub
+# Script PowerShell para subir el ejecutable de Duetto Windows al release de GitHub
 # Uso: .\subir-windows-release.ps1
 
-Write-Host "🚀 Subiendo ejecutable de Windows a GitHub Release v1.0.0..." -ForegroundColor Green
+Write-Host "🚀 Subiendo Duetto para Windows a GitHub Release v1.0.0..." -ForegroundColor Green
 Write-Host ""
 
 # Verificar si gh CLI está instalado
@@ -41,7 +41,7 @@ Write-Host "✅ Autenticado correctamente" -ForegroundColor Green
 Write-Host ""
 
 # Verificar que existe el ejecutable
-$exePath = "release\Cartas Proyectivas Setup 1.0.0.exe"
+$exePath = "release\Duetto Setup 1.0.0.exe"
 
 if (-not (Test-Path $exePath)) {
     Write-Host "❌ No se encuentra el ejecutable en: $exePath" -ForegroundColor Red

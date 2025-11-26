@@ -1,90 +1,170 @@
-# 🎴 Cartas Proyectivas
+# 🎴 Duetto
 
-> Aplicación de escritorio para terapia con cartas proyectivas estilo OH Cards
+Aplicación de escritorio para terapia con cartas proyectivas estilo OH Cards. Duetto combina mazos de palabras e imágenes para facilitar procesos terapéuticos y de autoconocimiento.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
-
-## 📥 Descarga Rápida
-
-**¿Solo quieres usar la aplicación?** Descarga el ejecutable para tu sistema operativo:
-
-- **Windows**: `Cartas-Proyectivas-Setup-1.0.0.exe` *(Próximamente)*
-- **macOS**: `Cartas-Proyectivas-1.0.0.dmg` *(Próximamente)*
-- **Linux**: [`Cartas-Proyectivas-1.0.0.AppImage`](release/Cartas%20Proyectivas-1.0.0.AppImage) ✅ **Disponible**
-
-### Instrucciones de Instalación
-
-#### Linux
-```bash
-# Descarga el archivo .AppImage
-# Dale permisos de ejecución
-chmod +x Cartas-Proyectivas-1.0.0.AppImage
-
-# Ejecuta la aplicación
-./Cartas-Proyectivas-1.0.0.AppImage
-```
-
-#### Windows *(Próximamente)*
-```
-1. Descarga el instalador .exe
-2. Ejecuta el archivo
-3. Sigue el asistente de instalación
-```
-
-#### macOS *(Próximamente)*
-```
-1. Descarga el archivo .dmg
-2. Abre el archivo
-3. Arrastra la aplicación a la carpeta Aplicaciones
-```
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
 ---
 
-## ✨ Características
+## 📥 Descargar Duetto
 
-- 🎴 **Dos mazos de cartas**: Palabras (44 cartas) e Imágenes (44 cartas)
-- 💾 **Persistencia automática**: Tus cambios se guardan automáticamente entre sesiones
-- ⚙️ **Totalmente personalizable**: Añade, edita o elimina cartas desde la interfaz
-- 🔄 **Mezcla aleatoria**: Las cartas se barajan automáticamente al reiniciar
-- 🖥️ **Funciona offline**: Aplicación de escritorio que no requiere internet
+Descarga el ejecutable para tu sistema operativo desde [GitHub Releases](https://github.com/ravazque/projection-charts/releases/latest):
 
-## 🎮 Cómo Usar
+### Windows
+```
+Duetto-Setup-1.0.0.exe
+```
+**Instalación:**
+1. Descarga el instalador `.exe`
+2. Ejecuta el archivo descargado
+3. Sigue el asistente de instalación
+4. Lanza Duetto desde el menú de inicio o el acceso directo del escritorio
 
-1. **Selecciona cartas**: Haz clic en las cartas que desees (aparecerá ✓ verde)
-2. **Voltear**: Presiona "🎴 Revelar" para ver el contenido
-3. **Reiniciar**: Usa "🔄 Reiniciar / Mezclar" para barajar
-4. **Configurar**: Presiona "⚙️" para gestionar tus cartas
+### Linux
+```
+Duetto-1.0.0.AppImage
+```
+**Instalación:**
+```bash
+# Descarga el archivo .AppImage
+# Dale permisos de ejecución
+chmod +x Duetto-1.0.0.AppImage
 
-## 💾 Persistencia de Datos
+# Ejecuta la aplicación
+./Duetto-1.0.0.AppImage
+```
 
-✅ **Todo se guarda automáticamente:**
-- Cartas personalizadas que agregues
-- Modificaciones a cartas existentes
-- Cantidad de cartas por mazo
+**Compatibilidad Linux:** Funciona en la mayoría de distribuciones modernas (Ubuntu 18.04+, Fedora 28+, Debian 10+, Arch, etc.)
 
-Los datos persisten entre ejecuciones de la aplicación. Se almacenan localmente en tu equipo usando la tecnología de localStorage de Electron.
+---
 
-### Ubicación de los Datos
+## ✨ Características Principales
 
-Los datos se guardan en:
-- **Linux**: `~/.config/cartas-proyectivas/`
-- **Windows**: `%APPDATA%\cartas-proyectivas\`
-- **macOS**: `~/Library/Application Support/cartas-proyectivas/`
+### 🎴 Dos Mazos de Cartas
+
+Duetto incluye dos mazos complementarios:
+
+- **Mazo de Palabras (44 cartas)**: Conceptos, emociones y arquetipos verbales
+  - AMOR, MIEDO, ESPERANZA, SOLEDAD, LIBERTAD, ALEGRÍA, TRISTEZA, FAMILIA
+  - FUERZA, PAZ, CONFIANZA, CAMBIO, DOLOR, VALENTÍA, FUTURO, PASADO
+  - Y 28 palabras más cuidadosamente seleccionadas
+
+- **Mazo de Imágenes (44 cartas)**: Símbolos visuales universales
+  - Elementos naturales: 🌅 🌊 🏔️ 🌳 🌸 🔥 💧 🌈
+  - Seres vivos: 🦋 🦅 🕊️ 🐚 🐝 🐞
+  - Y 30 símbolos adicionales para exploración proyectiva
+
+### 💾 Persistencia Automática
+
+- **Guardado automático de cambios**: Todas las modificaciones que hagas a los mazos se guardan automáticamente
+- **Configuración personalizada persistente**: Tus cartas personalizadas permanecen entre sesiones
+- **Sin necesidad de "Guardar"**: La aplicación gestiona el almacenamiento de forma transparente
+
+**Ubicación de los datos:**
+- Windows: `%APPDATA%\duetto\`
+- Linux: `~/.config/duetto/`
+
+### ⚙️ Totalmente Personalizable
+
+- **Añade nuevas cartas**: Expande los mazos con tus propias palabras o emojis
+- **Edita cartas existentes**: Modifica el contenido de cualquier carta
+- **Elimina cartas**: Reduce los mazos según tus necesidades terapéuticas
+- **Ajusta la cantidad**: Desde 10 hasta 100+ cartas por mazo
+
+### 🔄 Mezcla Aleatoria
+
+- **Barajado automático**: Los mazos se mezclan aleatoriamente al reiniciar la sesión
+- **Algoritmo Fisher-Yates**: Garantiza una distribución uniforme y aleatoria real
+- **Reinicio manual**: Botón "Reiniciar / Mezclar" disponible en cualquier momento
+
+### 🖥️ Funcionamiento Offline
+
+- **Sin internet necesario**: Toda la aplicación funciona localmente
+- **Privacidad total**: Ningún dato se envía a servidores externos
+- **Rendimiento óptimo**: No depende de conexión a internet
+
+### 🎯 Interfaz Intuitiva
+
+- **Scroll horizontal**: Navega fácilmente por todos los mazos
+- **Selección visual**: Las cartas seleccionadas muestran ✓ verde
+- **Revelado progresivo**: Voltea solo las cartas que necesites
+- **Contador de cartas**: Indicadores visuales de cartas seleccionadas y volteadas
+
+---
+
+## 🎮 Cómo Usar Duetto
+
+### Flujo de Trabajo Básico
+
+1. **Selecciona cartas**
+   - Haz clic en las cartas que desees de cualquier mazo
+   - Verás un ✓ verde en las cartas seleccionadas
+   - Puedes seleccionar cartas de ambos mazos simultáneamente
+
+2. **Voltear cartas**
+   - Presiona el botón "🎴 Revelar"
+   - Las cartas seleccionadas se voltearán mostrando su contenido
+   - Las cartas reveladas se moverán al inicio para facilitar la visualización
+
+3. **Reiniciar sesión**
+   - Usa "🔄 Reiniciar / Mezclar" para barajar los mazos
+   - Todas las cartas vuelven a estado boca abajo
+   - El orden se aleatoriza completamente
+
+4. **Configurar mazos**
+   - Presiona "⚙️" para abrir el panel de configuración
+   - Edita, añade o elimina cartas según necesites
+   - Los cambios se guardan automáticamente
+
+### Casos de Uso
+
+**Terapia individual:**
+- Cliente selecciona cartas que resuenan con su situación actual
+- Combina palabra + imagen para profundizar en significados
+- Usa las cartas como disparadores de conversación
+
+**Terapia de pareja:**
+- Cada persona selecciona cartas por separado
+- Comparen y discutan las elecciones
+- Encuentren puentes entre perspectivas diferentes
+
+**Autoexploración:**
+- Selecciona 3-5 cartas aleatoriamente
+- Reflexiona sobre qué significan para ti hoy
+- Registra insights en un diario terapéutico
+
+---
+
+## 📋 Requisitos del Sistema
+
+### Windows
+- **Sistema Operativo**: Windows 10 o superior (64-bit)
+- **Procesador**: Intel Core i3 o equivalente
+- **RAM**: 2 GB mínimo, 4 GB recomendado
+- **Espacio en disco**: 300 MB libres
+- **Pantalla**: 1280x720 resolución mínima
+
+### Linux
+- **Sistema Operativo**: Distribución con Kernel 3.10+
+- **Procesador**: Intel Core i3 o equivalente
+- **RAM**: 2 GB mínimo, 4 GB recomendado
+- **Espacio en disco**: 300 MB libres
+- **Pantalla**: 1280x720 resolución mínima
+- **Librerías**: GLIBC 2.28+ (incluido en distros modernas)
 
 ---
 
 ## 👨‍💻 Para Desarrolladores
 
-¿Quieres modificar o compilar la aplicación? Consulta la [Documentación Técnica](docs/README_TECNICO.md).
+¿Quieres modificar Duetto, compilar desde el código fuente o contribuir al desarrollo?
 
 ### Instalación para Desarrollo
 
 ```bash
 # Clonar el repositorio
-git clone <tu-repo>
-cd ariarcos
+git clone https://github.com/ravazque/projection-charts.git
+cd projection-charts
 
 # Instalar dependencias
 npm install
@@ -96,90 +176,165 @@ npm run electron
 ### Compilar Ejecutables
 
 ```bash
-# Linux
+# Linux (desde cualquier sistema)
 npm run electron:build:linux
 
-# Windows (solo desde Windows)
+# Windows (SOLO desde Windows)
 npm run electron:build:win
 
-# macOS (solo desde macOS)
+# macOS (SOLO desde macOS - próximamente)
 npm run electron:build:mac
 ```
 
-**Nota importante**: Debido a limitaciones de electron-builder:
-- Los ejecutables de **Windows** solo pueden compilarse desde Windows
-- Los ejecutables de **macOS** solo pueden compilarse desde macOS
-- Los ejecutables de **Linux** pueden compilarse desde cualquier sistema
+**Limitaciones de electron-builder:**
+- Ejecutables Windows solo pueden compilarse desde Windows
+- Ejecutables macOS solo pueden compilarse desde macOS
+- Ejecutables Linux pueden compilarse desde cualquier sistema
+
+Los ejecutables compilados se generan en la carpeta `release/`.
 
 ### Scripts Disponibles
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Servidor de desarrollo web |
-| `npm run electron` | Ejecutar como aplicación de escritorio |
-| `npm run build` | Compilar para producción |
+| `npm run dev` | Servidor de desarrollo web (Vite) |
+| `npm run electron` | Ejecutar como aplicación Electron en desarrollo |
+| `npm run build` | Compilar aplicación React para producción |
 | `npm run electron:build:linux` | Crear ejecutable Linux (.AppImage) |
 | `npm run electron:build:win` | Crear ejecutable Windows (.exe) |
-| `npm run electron:build:mac` | Crear ejecutable macOS (.dmg) |
 
-## 📁 Estructura del Proyecto
+### Estructura del Proyecto
 
 ```
-ariarcos/
-├── src/                    # Código fuente React
-│   ├── components/         # Componentes React
-│   ├── data/              # Datos de las cartas
-│   ├── App.jsx            # Componente principal
-│   └── main.jsx           # Punto de entrada
-├── build/                 # Recursos para compilación
-│   └── icon.png           # Icono de la aplicación
-├── docs/                  # Documentación
-│   ├── README_TECNICO.md  # Guía técnica completa
-│   └── INSTRUCCIONES_RAPIDAS.txt  # Guía de inicio rápido
-├── release/               # Ejecutables compilados
-├── electron.js            # Configuración de Electron
-├── package.json           # Dependencias y scripts
-└── vite.config.js         # Configuración de Vite
+duetto/
+├── src/                          # Código fuente React
+│   ├── components/               # Componentes React
+│   │   ├── Card.jsx             # Componente individual de carta
+│   │   ├── Deck.jsx             # Componente mazo de cartas
+│   │   ├── ControlPanel.jsx    # Panel de botones principales
+│   │   └── DeckConfig.jsx       # Panel de configuración
+│   ├── data/
+│   │   └── cardsData.js         # Datos de las 88 cartas (44+44)
+│   ├── App.jsx                  # Componente principal
+│   ├── App.css                  # Estilos globales
+│   └── main.jsx                 # Punto de entrada React
+├── build/                       # Recursos de compilación
+│   └── icon.png                 # Icono de la aplicación (1024x1024)
+├── docs/                        # Documentación técnica
+│   ├── README_TECNICO.md        # Guía técnica detallada
+│   └── INSTRUCCIONES_RAPIDAS.txt
+├── release/                     # Ejecutables compilados (no en repo)
+├── electron.js                  # Configuración Electron
+├── package.json                 # Dependencias y configuración
+├── vite.config.js              # Configuración Vite
+├── index.html                   # HTML principal
+├── COMPILAR_WINDOWS.md         # Guía para compilar en Windows
+├── INSTALAR_NODEJS_WINDOWS.md  # Guía instalación Node.js Windows
+└── README.md                    # Este archivo
 ```
 
-## 🛠️ Tecnologías
+### Stack Tecnológico
 
-- **Frontend**: React 18 + Vite
-- **Desktop**: Electron
-- **Estilos**: CSS puro
-- **Build**: electron-builder
+- **Frontend**: React 18 con hooks
+- **Build tool**: Vite 5 (desarrollo rápido con HMR)
+- **Desktop**: Electron 39
+- **Build system**: electron-builder 26
+- **Estilos**: CSS puro (sin preprocessadores)
+- **Almacenamiento**: localStorage (Electron)
 
-## 📖 Documentación Adicional
+### Arquitectura de Datos
 
-- [Documentación Técnica Completa](docs/README_TECNICO.md) - Arquitectura, desarrollo y API
-- [Instrucciones Rápidas](docs/INSTRUCCIONES_RAPIDAS.txt) - Guía de inicio rápido
+**Flujo de persistencia:**
+1. Usuario modifica cartas en el configurador
+2. `App.jsx` actualiza el estado con `useState`
+3. `useEffect` detecta cambios y guarda en localStorage
+4. Al reiniciar, `loadSavedCards()` carga desde localStorage
+5. Si no hay datos guardados, usa `cardsData.js` por defecto
 
-## ❓ Soporte
-
-Si tienes problemas:
-
-1. **Ejecutable no inicia**: Verifica que tengas los permisos necesarios
-2. **Datos no se guardan**: Comprueba que la aplicación tenga permisos de escritura
-3. **Errores al compilar**: Revisa la [documentación técnica](docs/README_TECNICO.md)
-
-## 🤝 Contribuciones
-
-Este es un proyecto freelance personalizado. Para contribuciones o mejoras, contacta al desarrollador.
-
-## 📄 Licencia
-
-Este proyecto es privado y de uso personalizado.
-
-## 🎯 Roadmap
-
-- [x] Aplicación base con dos mazos
-- [x] Persistencia de datos
-- [x] Ejecutable para Linux
-- [ ] Ejecutables para Windows y macOS
-- [ ] Exportar sesiones a PDF
-- [ ] Historial de sesiones
-- [ ] Modo oscuro
+**Estados de las cartas:**
+- `faceDown`: Carta boca abajo (inicial)
+- `selected`: Carta seleccionada pero no volteada (✓ verde)
+- `flipped`: Carta volteada mostrando contenido
 
 ---
 
-**Desarrollado con ❤️ usando React + Electron**
+## 📖 Documentación Adicional
+
+- **[Documentación Técnica Completa](docs/README_TECNICO.md)**: Arquitectura interna, API de componentes, guía de desarrollo
+- **[Instrucciones de Compilación Windows](COMPILAR_WINDOWS.md)**: Guía paso a paso para crear el ejecutable Windows
+- **[Instalación Node.js en Windows](INSTALAR_NODEJS_WINDOWS.md)**: Cómo instalar las herramientas de desarrollo
+
+---
+
+## ❓ Preguntas Frecuentes
+
+### ¿Duetto envía mis datos a algún servidor?
+
+No. Duetto funciona completamente offline. Todos tus datos se almacenan localmente en tu ordenador. No hay conexión a servidores externos.
+
+### ¿Puedo usar Duetto en consulta online?
+
+Sí, pero necesitarás compartir pantalla con tu cliente. Duetto está diseñado para uso local, no es una aplicación web colaborativa.
+
+### ¿Cuántas cartas puedo tener en cada mazo?
+
+No hay límite técnico, pero la interfaz está optimizada para 20-60 cartas por mazo. Puedes añadir tantas como necesites.
+
+### ¿Puedo exportar o imprimir las cartas?
+
+En la versión 1.0.0 no incluye exportación. Esta funcionalidad está planificada para versiones futuras.
+
+### ¿Cómo desinstalo Duetto?
+
+- **Windows**: Panel de Control → Programas → Desinstalar Duetto
+- **Linux**: Simplemente elimina el archivo `.AppImage`
+
+Para eliminar los datos guardados:
+- **Windows**: Elimina `%APPDATA%\duetto\`
+- **Linux**: Elimina `~/.config/duetto/`
+
+### ¿Funcionará en macOS?
+
+La versión para macOS está en desarrollo. Sigue el repositorio para actualizaciones.
+
+---
+
+## 🐛 Solución de Problemas
+
+### Windows: "Windows protegió tu PC"
+
+Esto es normal en aplicaciones sin firma digital costosa. Click en "Más información" → "Ejecutar de todos modos".
+
+### Linux: El AppImage no ejecuta
+
+```bash
+# Asegúrate de tener permisos
+chmod +x Duetto-1.0.0.AppImage
+
+# Si falla, prueba con:
+./Duetto-1.0.0.AppImage --no-sandbox
+```
+
+### Los cambios no se guardan
+
+Verifica que la aplicación tenga permisos de escritura en:
+- Windows: `%APPDATA%`
+- Linux: `~/.config/`
+
+### La aplicación no inicia
+
+1. Verifica que cumples los requisitos mínimos del sistema
+2. Intenta reinstalar la aplicación
+3. Elimina los datos guardados y vuelve a intentar
+
+---
+
+## 🔗 Enlaces
+
+- **Repositorio**: https://github.com/ravazque/projection-charts
+- **Releases**: https://github.com/ravazque/projection-charts/releases
+- **Issues**: https://github.com/ravazque/projection-charts/issues
+
+---
+
+**Duetto v1.0.0** | React + Electron | 2025

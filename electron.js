@@ -13,8 +13,8 @@ function createWindow() {
       contextIsolation: true,
       enableRemoteModule: false
     },
-    icon: path.join(__dirname, 'icon.png'), // Opcional: añade tu icono aquí
-    title: 'Cartas Proyectivas'
+    icon: path.join(__dirname, 'build', 'icon.png'),
+    title: 'Duetto'
   });
 
   // Cargar la aplicación

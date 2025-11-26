@@ -1,9 +1,9 @@
 {
-  "name": "cartas-proyectivas",
+  "name": "duetto",
   "private": true,
   "version": "1.0.0",
-  "description": "Aplicación de cartas proyectivas para consultas psicológicas",
-  "author": "Tu Nombre",
+  "description": "Duetto - Aplicación de cartas proyectivas para terapia",
+  "author": "Duetto",
   "main": "electron.js",
   "scripts": {
     "dev": "vite",
@@ -31,8 +31,8 @@
     "wait-on": "^9.0.3"
   },
   "build": {
-    "appId": "com.cartasproyectivas.app",
-    "productName": "Cartas Proyectivas",
+    "appId": "com.duetto.app",
+    "productName": "Duetto",
     "files": [
       "dist/**/*",
       "electron.js",
