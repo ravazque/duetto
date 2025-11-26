@@ -2,7 +2,7 @@
 
 Aplicación de escritorio para terapia con cartas proyectivas estilo OH Cards. Duetto combina mazos de palabras e imágenes para facilitar procesos terapéuticos y de autoconocimiento.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
 ---
@@ -13,7 +13,7 @@ Descarga el ejecutable para tu sistema operativo desde [GitHub Releases](https:/
 
 ### Windows
 ```
-Duetto-Setup-1.0.0.exe
+Duetto-Setup-1.1.0.exe
 ```
 **Instalación:**
 1. Descarga el instalador `.exe`
@@ -23,16 +23,16 @@ Duetto-Setup-1.0.0.exe
 
 ### Linux
 ```
-Duetto-1.0.0.AppImage
+Duetto-1.1.0.AppImage
 ```
 **Instalación:**
 ```bash
 # Descarga el archivo .AppImage
 # Dale permisos de ejecución
-chmod +x Duetto-1.0.0.AppImage
+chmod +x Duetto-1.1.0.AppImage
 
 # Ejecuta la aplicación
-./Duetto-1.0.0.AppImage
+./Duetto-1.1.0.AppImage
 ```
 
 **Compatibilidad Linux:** Funciona en la mayoría de distribuciones modernas (Ubuntu 18.04+, Fedora 28+, Debian 10+, Arch, etc.)
@@ -309,10 +309,10 @@ Esto es normal en aplicaciones sin firma digital costosa. Click en "Más informa
 
 ```bash
 # Asegúrate de tener permisos
-chmod +x Duetto-1.0.0.AppImage
+chmod +x Duetto-1.1.0.AppImage
 
 # Si falla, prueba con:
-./Duetto-1.0.0.AppImage --no-sandbox
+./Duetto-1.1.0.AppImage --no-sandbox
 ```
 
 ### Los cambios no se guardan
@@ -337,4 +337,4 @@ Verifica que la aplicación tenga permisos de escritura en:
 
 ---
 
-**Duetto v1.0.0** | React + Electron | 2025
+**Duetto v1.1.0** | React + Electron | 2025
