@@ -13,18 +13,20 @@ dist
 dist-ssr
 *.local
 
-# Electron
-release
-build/*.png
+# Electron - Build artifacts (no subir binarios grandes)
+release/linux-unpacked/
+release/builder-debug.yml
+release/latest-*.yml
 build/*.ico
 build/*.icns
-*.exe
-*.dmg
-*.AppImage
+
+# Permitir ejecutables en release para distribución
+# (Se pueden subir a GitHub Releases manualmente si son muy grandes)
 
 # Editor
 .vscode/*
-.claude
+.claude/*.local.json
+.claude/settings.local.json
 !.vscode/extensions.json
 .idea
 .DS_Store
