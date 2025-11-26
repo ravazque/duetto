@@ -222,14 +222,14 @@ duetto/
 │   └── icon.png                 # Icono de la aplicación (1024x1024)
 ├── docs/                        # Documentación técnica
 │   ├── README_TECNICO.md        # Guía técnica detallada
-│   └── INSTRUCCIONES_RAPIDAS.txt
+│   ├── INSTRUCCIONES_RAPIDAS.txt
+│   ├── COMPILAR_WINDOWS.md         # Guía para compilar en Windows
+│   └── INSTALAR_NODEJS_WINDOWS.md  # Guía instalación Node.js Windows
 ├── release/                     # Ejecutables compilados (no en repo)
 ├── electron.js                  # Configuración Electron
 ├── package.json                 # Dependencias y configuración
 ├── vite.config.js              # Configuración Vite
 ├── index.html                   # HTML principal
-├── COMPILAR_WINDOWS.md         # Guía para compilar en Windows
-├── INSTALAR_NODEJS_WINDOWS.md  # Guía instalación Node.js Windows
 └── README.md                    # Este archivo
 ```
 
@@ -261,8 +261,8 @@ duetto/
 ## 📖 Documentación Adicional
 
 - **[Documentación Técnica Completa](docs/README_TECNICO.md)**: Arquitectura interna, API de componentes, guía de desarrollo
-- **[Instrucciones de Compilación Windows](COMPILAR_WINDOWS.md)**: Guía paso a paso para crear el ejecutable Windows
-- **[Instalación Node.js en Windows](INSTALAR_NODEJS_WINDOWS.md)**: Cómo instalar las herramientas de desarrollo
+- **[Instrucciones de Compilación Windows](docs/COMPILAR_WINDOWS.md)**: Guía paso a paso para crear el ejecutable Windows
+- **[Instalación Node.js en Windows](docs/INSTALAR_NODEJS_WINDOWS.md)**: Cómo instalar las herramientas de desarrollo
 
 ---
 
