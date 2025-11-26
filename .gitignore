@@ -17,11 +17,16 @@ dist-ssr
 release/linux-unpacked/
 release/builder-debug.yml
 release/latest-*.yml
+release/*.AppImage
+release/*.exe
+release/*.dmg
+release/checksum.txt
+release/README.md
 build/*.ico
 build/*.icns
 
-# Permitir ejecutables en release para distribución
-# (Se pueden subir a GitHub Releases manualmente si son muy grandes)
+# Los ejecutables se distribuyen vía GitHub Releases (no en el repo)
+# Ejecutables grandes (>100MB) no se pueden subir directamente al repo
 
 # Editor
 .vscode/*
