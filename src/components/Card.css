@@ -17,6 +17,16 @@
   transform: scale(0.98);
 }
 
+/* Las cartas volteadas no tienen efecto hover */
+.card.flipped {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.card.flipped:hover {
+  transform: none;
+}
+
 /* Sistema de volteo 3D */
 .card-inner {
   position: relative;
@@ -26,83 +36,9 @@
   transform-style: preserve-3d;
 }
 
-/* Cuando la carta está volteada Y tiene can-flip - mostrar contenido */
-.card.flipped.can-flip .card-inner {
+/* Cuando la carta está volteada - mostrar contenido */
+.card.flipped .card-inner {
   transform: rotateY(180deg);
-}
-
-/* Las cartas previamente volteadas SIEMPRE deben estar volteadas - excepto cuando se resetean */
-.card.previously-flipped:not(.resetting) .card-inner {
-  transform: rotateY(180deg) !important;
-}
-
-/* Animación para voltear cartas boca abajo al resetear - MÁXIMA PRIORIDAD */
-.card.resetting .card-inner {
-  animation: flipToBack 0.6s ease-in-out forwards !important;
-}
-
-@keyframes flipToBack {
-  0% {
-    transform: rotateY(180deg);
-  }
-  100% {
-    transform: rotateY(0deg);
-  }
-}
-
-/* Animaciones de deslizamiento smooth */
-
-/* Cartas recién seleccionadas: NO animan hasta tener can-flip */
-.card.flipped:not(.previously-flipped):not(.can-flip) {
-  z-index: 100;
-  position: relative;
-}
-
-/* Con can-flip: animación suave de elevación + volteo */
-.card.flipped:not(.previously-flipped).can-flip {
-  animation: smoothReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  z-index: 100;
-  position: relative;
-}
-
-/* Cartas ya volteadas previamente: no necesitan animación especial */
-.card.previously-flipped {
-  position: relative;
-}
-
-/* Animación: elevación suave sin teletransporte */
-@keyframes smoothReveal {
-  0% {
-    transform: scale(1.02) translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  50% {
-    transform: scale(1.03) translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Las cartas recién volteadas NO se dan la vuelta hasta que tengan la clase can-flip */
-.card.flipped:not(.previously-flipped) .card-inner {
-  transform: rotateY(0deg); /* Inicialmente sin voltear */
-}
-
-/* Solo cuando tienen can-flip se voltean TODAS a la vez */
-.card.flipped:not(.previously-flipped).can-flip .card-inner {
-  animation: instantFlip 0.6s ease-in-out forwards;
-}
-
-@keyframes instantFlip {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(180deg);
-  }
 }
 
 /* Caras de la carta */
@@ -148,10 +84,10 @@
   padding: 10px;
 }
 
-/* Carta previamente revelada */
-.card.previously-flipped .card-front {
-  border: 3px solid rgb(175, 102, 102);
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), 0 0 10px rgba(212, 104, 104, 0.4);
+/* Carta revelada */
+.card.flipped .card-front {
+  border: 3px solid #10b981;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
 .card-word {
@@ -229,8 +165,109 @@
   box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
 }
 
+/* Estado moviéndose al final (antes de voltear) */
+.card.moving-to-end {
+  transform: translateY(-5px);
+}
+
+.card.moving-to-end .card-back {
+  border-color: #fbbf24;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  animation: pulse-moving 0.6s ease-in-out infinite;
+}
+
+@keyframes pulse-moving {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+  }
+}
+
 /* Responsive - Manteniendo ratio 2:3 */
-@media (max-width: 768px) {
+/* Pantallas ultra grandes (4K, 2560px+) */
+@media (min-width: 2560px) {
+  .card {
+    width: 200px;
+    height: 300px;
+  }
+
+  .card-word {
+    font-size: 1.5rem;
+  }
+
+  .card-image {
+    font-size: 6rem;
+  }
+
+  .card-type-indicator {
+    font-size: 5rem;
+  }
+
+  .selection-indicator {
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+  }
+}
+
+/* Pantallas grandes (Full HD, 1920px+) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .card {
+    width: 170px;
+    height: 255px;
+  }
+
+  .card-word {
+    font-size: 1.3rem;
+  }
+
+  .card-image {
+    font-size: 5rem;
+  }
+
+  .card-type-indicator {
+    font-size: 4rem;
+  }
+
+  .selection-indicator {
+    width: 42px;
+    height: 42px;
+    font-size: 1.5rem;
+  }
+}
+
+/* Pantallas estándar (1367px-1919px) - tamaño base */
+@media (min-width: 1367px) and (max-width: 1919px) {
+  .card {
+    width: 140px;
+    height: 210px;
+  }
+}
+
+/* Pantallas pequeñas (1024px-1366px) */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .card {
+    width: 120px;
+    height: 180px;
+  }
+
+  .card-word {
+    font-size: 0.95rem;
+  }
+
+  .card-image {
+    font-size: 3.5rem;
+  }
+
+  .card-type-indicator {
+    font-size: 2.8rem;
+  }
+}
+
+/* Tablets (768px-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .card {
     width: 100px;
     height: 150px;
@@ -249,6 +286,27 @@
   }
 }
 
+/* Móviles (hasta 767px) */
+@media (max-width: 767px) {
+  .card {
+    width: 90px;
+    height: 135px;
+  }
+
+  .card-word {
+    font-size: 0.8rem;
+  }
+
+  .card-image {
+    font-size: 2.5rem;
+  }
+
+  .card-type-indicator {
+    font-size: 2rem;
+  }
+}
+
+/* Móviles pequeños (hasta 480px) */
 @media (max-width: 480px) {
   .card {
     width: 80px;
@@ -261,5 +319,9 @@
 
   .card-image {
     font-size: 2rem;
+  }
+
+  .card-type-indicator {
+    font-size: 1.5rem;
   }
 }

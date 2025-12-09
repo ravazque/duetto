@@ -9,20 +9,11 @@ import './Deck.css';
  * - title: título del mazo (ej. "Mazo de Palabras")
  * - cards: array de cartas
  * - onCardSelect: función para manejar selección
- * - resetScroll: trigger para resetear scroll al inicio
  * - deckGridRef: ref externa para el scroll del deck
- * - canFlipCards: flag que indica si las cartas pueden voltearse
  */
-const Deck = ({ title, cards, onCardSelect, resetScroll, deckGridRef, canFlipCards }) => {
+const Deck = ({ title, cards, onCardSelect, deckGridRef }) => {
   const localDeckGridRef = useRef(null);
   const gridRef = deckGridRef || localDeckGridRef;
-
-  // Resetear scroll al inicio cuando se revelan cartas
-  useEffect(() => {
-    if (resetScroll && gridRef.current) {
-      gridRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-    }
-  }, [resetScroll, gridRef]);
 
   return (
     <div className="deck">
@@ -33,7 +24,6 @@ const Deck = ({ title, cards, onCardSelect, resetScroll, deckGridRef, canFlipCar
             key={card.id}
             card={card}
             onSelect={onCardSelect}
-            canFlip={canFlipCards}
           />
         ))}
       </div>

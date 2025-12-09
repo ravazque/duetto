@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Deck from './components/Deck';
 import ControlPanel from './components/ControlPanel';
-import DeckConfig from './components/DeckConfig';
+import RevealArea from './components/RevealArea';
 import { wordCards, imageCards } from './data/cardsData';
 import './App.css';
 
@@ -16,36 +16,32 @@ import './App.css';
  * 3. flipped → carta volteada mostrando contenido
  */
 function App() {
-  // Cargar configuración guardada del localStorage o usar valores por defecto
+  // Las cartas son fijas desde cardsData.js, no se cargan desde localStorage
   const loadSavedCards = () => {
-    try {
-      // Limpiar datos de prueba al iniciar (solo para reseteo inicial)
-      // localStorage.clear(); // Descomenta esta línea si quieres resetear todo
+    // Limpiar localStorage de cartas antiguas (solo se ejecuta una vez)
+    localStorage.removeItem('wordCards');
+    localStorage.removeItem('imageCards');
 
-      const savedWords = localStorage.getItem('wordCards');
-      const savedImages = localStorage.getItem('imageCards');
-      return {
-        words: savedWords ? JSON.parse(savedWords).map(card => ({ ...card, state: 'faceDown' })) : wordCards,
-        images: savedImages ? JSON.parse(savedImages).map(card => ({ ...card, state: 'faceDown' })) : imageCards
-      };
-    } catch (error) {
-      console.error('Error cargando configuración:', error);
-      return { words: wordCards, images: imageCards };
-    }
+    return {
+      words: wordCards.map(card => ({ ...card, state: 'faceDown' })),
+      images: imageCards.map(card => ({ ...card, state: 'faceDown' }))
+    };
   };
 
   // Estado para todas las cartas (palabras e imágenes)
   const [words, setWords] = useState(() => loadSavedCards().words);
   const [images, setImages] = useState(() => loadSavedCards().images);
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
-  const [scrollReset, setScrollReset] = useState(0); // Trigger para resetear scroll
+  const [revealedWordCard, setRevealedWordCard] = useState(null); // Carta de palabra revelada
+  const [revealedImageCard, setRevealedImageCard] = useState(null); // Carta de imagen revelada
+  const [revealKey, setRevealKey] = useState(0); // Key para forzar re-animación
+  const [revealedPairs, setRevealedPairs] = useState(0); // Contador de parejas reveladas
   const [darkMode, setDarkMode] = useState(() => {
     // Cargar preferencia de modo oscuro desde localStorage
     const saved = localStorage.getItem('darkMode');
     return saved ? JSON.parse(saved) : false;
   });
-  const [canFlipCards, setCanFlipCards] = useState(false); // Controla cuándo se pueden voltear las cartas
   const [isShuffling, setIsShuffling] = useState(false); // Controla si está en proceso de mezclar
+  const [isRevealing, setIsRevealing] = useState(false); // Controla si está en proceso de revelar
   const decksContainerRef = useRef(null); // Ref para el contenedor de mazos
   const wordDeckRef = useRef(null); // Ref para el slider del mazo de palabras
   const imageDeckRef = useRef(null); // Ref para el slider del mazo de imágenes
@@ -61,32 +57,16 @@ function App() {
     }
   }, [darkMode]);
 
-  // Guardar configuración de cartas cuando se actualicen (solo contenido, no estados)
-  useEffect(() => {
-    try {
-      // Guardar solo el contenido de las cartas, no sus estados
-      const wordsToSave = words.map(card => ({
-        id: card.id,
-        type: card.type,
-        content: card.content
-      }));
-      const imagesToSave = images.map(card => ({
-        id: card.id,
-        type: card.type,
-        content: card.content,
-        imageData: card.imageData || null
-      }));
-
-      localStorage.setItem('wordCards', JSON.stringify(wordsToSave));
-      localStorage.setItem('imageCards', JSON.stringify(imagesToSave));
-    } catch (error) {
-      console.error('Error guardando configuración:', error);
-    }
-  }, [words.length, images.length]); // Solo guardar cuando cambie la cantidad de cartas
+  // Las cartas son fijas, no se necesita guardar configuración
+  // Este efecto se mantiene deshabilitado ya que las palabras e imágenes no son editables
+  // useEffect(() => {
+  //   // Configuración deshabilitada - las cartas son fijas
+  // }, []);
 
   /**
    * Maneja la selección/deselección de una carta
    * REGLA: Máximo 1 carta seleccionada por mazo a la vez
+   * No se pueden seleccionar cartas ya volteadas (flipped)
    * @param {string} cardId - ID de la carta clickeada
    */
   const handleCardSelect = (cardId) => {
@@ -102,6 +82,11 @@ function App() {
 
       if (!clickedCard) {
         return cards; // No pertenece a este mazo
+      }
+
+      // No permitir seleccionar cartas volteadas
+      if (clickedCard.state === 'flipped') {
+        return cards;
       }
 
       // Si la carta clickeada está siendo deseleccionada
@@ -133,87 +118,67 @@ function App() {
   };
 
   /**
-   * Voltea todas las cartas seleccionadas y las mueve al inicio
-   * Secuencia: 1) Mover sliders al inicio, 2) Reordenar cartas, 3) Voltear cartas
+   * Revela las cartas seleccionadas moviéndolas al área de revelación
+   * Las cartas se voltean en el mazo y se mueven al final (derecha)
    */
   const handleFlipSelected = () => {
-    const prepareForFlip = (cards) => {
-      // Paso 1: Marcar correctamente todas las cartas
-      const updatedCards = cards.map((card) => {
-        if (card.state === 'selected') {
-          // Carta nueva para voltear
-          return { ...card, state: 'ready-to-flip', previouslyFlipped: false };
-        }
-        if (card.state === 'flipped') {
-          // Carta ya volteada - MANTENER estado flipped y marcar como previamente volteada
-          return { ...card, state: 'flipped', previouslyFlipped: true };
-        }
-        // Cartas normales
-        return { ...card, previouslyFlipped: card.previouslyFlipped || false };
-      });
+    // Bloquear el botón de mezclar mientras se revelan las cartas
+    setIsRevealing(true);
 
-      // Paso 2: Separar en grupos para reordenar
-      const readyToFlip = updatedCards.filter((card) => card.state === 'ready-to-flip');
-      const previouslyFlipped = updatedCards.filter((card) => card.state === 'flipped' && card.previouslyFlipped);
-      const notFlipped = updatedCards.filter((card) => card.state === 'faceDown');
+    // Encontrar las cartas seleccionadas
+    const selectedWord = words.find(card => card.state === 'selected');
+    const selectedImage = images.find(card => card.state === 'selected');
 
-      // Cartas para voltear al inicio, luego las que ya estaban volteadas, luego el resto
-      return [...readyToFlip, ...previouslyFlipped, ...notFlipped];
+    // PASO 1: Primero mover las cartas al final (sin voltear aún) para que se vea el movimiento
+    const moveToEnd = (cards) => {
+      // Marcar cartas seleccionadas como "moving-to-end" (aún no volteadas)
+      const updatedCards = cards.map(card =>
+        card.state === 'selected' ? { ...card, state: 'moving-to-end' } : card
+      );
+
+      // Separar en grupos: no seleccionadas y seleccionadas
+      const notMoving = updatedCards.filter(card => card.state !== 'moving-to-end');
+      const moving = updatedCards.filter(card => card.state === 'moving-to-end');
+
+      // Mover las seleccionadas al final
+      return [...notMoving, ...moving];
     };
 
-    const finalFlip = (cards) => {
-      return cards.map((card) => {
-        if (card.state === 'ready-to-flip') {
-          return { ...card, state: 'flipped' };
-        }
-        return card;
-      });
-    };
+    setWords(moveToEnd);
+    setImages(moveToEnd);
 
-    // Resetear el flag de flip
-    setCanFlipCards(false);
-
-    // PASO 1: Mover los sliders al inicio
-    setScrollReset(prev => prev + 1);
-
-    // PASO 2: Reordenar las cartas (pero aún no voltearlas)
-    setWords(prepareForFlip);
-    setImages(prepareForFlip);
-
-    // PASO 3: Esperar a que termine la animación de reordenamiento y luego voltear
+    // PASO 2: Después de un pequeño delay, voltear las cartas y actualizar el área de revelación
     setTimeout(() => {
-      const wordScroll = wordDeckRef.current?.scrollLeft || 0;
-      const imageScroll = imageDeckRef.current?.scrollLeft || 0;
+      // Voltear las cartas que están en moving-to-end
+      const flipCards = (cards) => {
+        return cards.map(card =>
+          card.state === 'moving-to-end' ? { ...card, state: 'flipped' } : card
+        );
+      };
 
-      // Verificar que los sliders estén al inicio antes de voltear
-      if (wordScroll < 5 && imageScroll < 5) {
-        // Cambiar estado a flipped para iniciar animación de volteo
-        setWords(finalFlip);
-        setImages(finalFlip);
+      setWords(flipCards);
+      setImages(flipCards);
 
-        // Activar flag para voltear después de un pequeño delay
-        setTimeout(() => {
-          setCanFlipCards(true);
-        }, 50);
-      } else {
-        // Si no están al inicio, seguir verificando
-        const checkScrollComplete = () => {
-          const wordScroll = wordDeckRef.current?.scrollLeft || 0;
-          const imageScroll = imageDeckRef.current?.scrollLeft || 0;
-
-          if (wordScroll < 5 && imageScroll < 5) {
-            setWords(finalFlip);
-            setImages(finalFlip);
-            setTimeout(() => {
-              setCanFlipCards(true);
-            }, 50);
-          } else {
-            setTimeout(checkScrollComplete, 50);
-          }
-        };
-        setTimeout(checkScrollComplete, 50);
+      // Mover las cartas al área de revelación
+      if (selectedWord) {
+        setRevealedWordCard(selectedWord);
       }
-    }, 350); // Esperar a que termine la animación de scroll y reordenamiento
+      if (selectedImage) {
+        setRevealedImageCard(selectedImage);
+      }
+
+      // Incrementar contador de parejas reveladas
+      setRevealedPairs(prev => prev + 1);
+
+      // Incrementar key para forzar re-animación
+      setRevealKey(prev => prev + 1);
+
+      // PASO 3: Desbloquear el botón de mezclar después de que termine la animación de revelación
+      // La animación de revelación dura 600ms (ver RevealArea.css)
+      setTimeout(() => {
+        setIsRevealing(false);
+      }, 700); // 700ms para asegurar que la animación haya terminado
+    }, 400); // Delay para que se vea el movimiento al final
   };
 
   /**
@@ -223,37 +188,27 @@ function App() {
     // Bloquear selección durante el mezclado
     setIsShuffling(true);
 
-    // Primero marcar las cartas volteadas para animación y deseleccionar las seleccionadas
-    const markResetting = (cards) => {
-      return cards.map((card) => {
-        if (card.state === 'flipped') {
-          return { ...card, state: 'resetting' };
-        }
-        // Deseleccionar cartas seleccionadas
-        if (card.state === 'selected') {
-          return { ...card, state: 'faceDown' };
-        }
-        return card;
-      });
+    // Limpiar cartas reveladas y resetear contador
+    setRevealedWordCard(null);
+    setRevealedImageCard(null);
+    setRevealedPairs(0);
+
+    // PASO 1: Voltear todas las cartas a faceDown (con animación)
+    const flipToFaceDown = (cards) => {
+      return cards.map((card) => ({
+        ...card,
+        state: 'faceDown'
+      }));
     };
 
-    setWords(markResetting);
-    setImages(markResetting);
+    setWords(flipToFaceDown);
+    setImages(flipToFaceDown);
 
-    // Después de la animación, resetear y mezclar
+    // PASO 2: Esperar a que termine la animación de volteo (600ms) y luego mezclar
     setTimeout(() => {
-      const resetAndShuffle = (cards) => {
-        // Resetear estado completamente (eliminar previouslyFlipped y otros flags)
-        const resetCards = cards.map((card) => ({
-          id: card.id,
-          type: card.type,
-          content: card.content,
-          imageData: card.imageData || null,
-          state: 'faceDown'
-        }));
-
+      const shuffleCards = (cards) => {
         // Mezclar usando algoritmo Fisher-Yates
-        const shuffled = [...resetCards];
+        const shuffled = [...cards];
         for (let i = shuffled.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -262,116 +217,23 @@ function App() {
         return shuffled;
       };
 
-      setWords(resetAndShuffle);
-      setImages(resetAndShuffle);
+      setWords(shuffleCards);
+      setImages(shuffleCards);
 
-      // Desbloquear selección después del mezclado
+      // PASO 3: Desbloquear selección después del mezclado
       setTimeout(() => {
         setIsShuffling(false);
       }, 100);
-    }, 600);
+    }, 650); // Esperar 650ms para que termine la animación de volteo (600ms de transición)
   };
 
-  /**
-   * Actualiza las cartas desde el configurador
-   */
-  const handleUpdateCards = (newWords, newImages) => {
-    // Marcar las cartas actuales que necesitan animación de reseteo
-    const markResettingWithNewContent = (oldCards, newCards) => {
-      return oldCards.map((oldCard, index) => {
-        const newCard = newCards[index];
-        // Si la carta vieja estaba volteada, marcarla como resetting pero con el contenido NUEVO
-        if (oldCard.state === 'flipped' || oldCard.previouslyFlipped) {
-          return {
-            ...newCard, // Usar el contenido nuevo
-            state: 'resetting',
-            previouslyFlipped: false
-          };
-        }
-        // Si estaba seleccionada, deseleccionar con contenido nuevo
-        if (oldCard.state === 'selected') {
-          return { ...newCard, state: 'faceDown' };
-        }
-        // Cartas normales: usar contenido nuevo directamente
-        return { ...newCard, state: 'faceDown' };
-      });
-    };
-
-    // Verificar si hay cartas volteadas (incluyendo las previouslyFlipped)
-    const hasFlippedCards = words.some(card => card.state === 'flipped' || card.previouslyFlipped) ||
-                           images.some(card => card.state === 'flipped' || card.previouslyFlipped);
-
-    if (hasFlippedCards) {
-      // Marcar cartas para resetear CON el contenido nuevo
-      setWords(prev => markResettingWithNewContent(prev, newWords));
-      setImages(prev => markResettingWithNewContent(prev, newImages));
-
-      // Después de la animación, asegurarse de que todas estén boca abajo
-      setTimeout(() => {
-        const updatedWords = newWords.map(card => ({
-          id: card.id,
-          type: card.type,
-          content: card.content,
-          imageData: card.imageData || null,
-          state: 'faceDown'
-        }));
-        const updatedImages = newImages.map(card => ({
-          id: card.id,
-          type: card.type,
-          content: card.content,
-          imageData: card.imageData || null,
-          state: 'faceDown'
-        }));
-
-        setWords(updatedWords);
-        setImages(updatedImages);
-
-        // Guardar inmediatamente la configuración actualizada
-        try {
-          localStorage.setItem('wordCards', JSON.stringify(updatedWords.map(c => ({ id: c.id, type: c.type, content: c.content }))));
-          localStorage.setItem('imageCards', JSON.stringify(updatedImages.map(c => ({ id: c.id, type: c.type, content: c.content, imageData: c.imageData || null }))));
-        } catch (error) {
-          console.error('Error guardando configuración:', error);
-        }
-      }, 600);
-    } else {
-      // Si no hay cartas volteadas, actualizar directamente
-      const updatedWords = newWords.map(card => ({
-        id: card.id,
-        type: card.type,
-        content: card.content,
-        imageData: card.imageData || null,
-        state: 'faceDown'
-      }));
-      const updatedImages = newImages.map(card => ({
-        id: card.id,
-        type: card.type,
-        content: card.content,
-        imageData: card.imageData || null,
-        state: 'faceDown'
-      }));
-
-      setWords(updatedWords);
-      setImages(updatedImages);
-
-      // Guardar inmediatamente la configuración actualizada
-      try {
-        localStorage.setItem('wordCards', JSON.stringify(updatedWords.map(c => ({ id: c.id, type: c.type, content: c.content }))));
-        localStorage.setItem('imageCards', JSON.stringify(updatedImages.map(c => ({ id: c.id, type: c.type, content: c.content, imageData: c.imageData || null }))));
-      } catch (error) {
-        console.error('Error guardando configuración:', error);
-      }
-    }
-  };
+  // Las cartas son fijas, no se permite edición desde la interfaz
+  // handleUpdateCards eliminado ya que no se necesita
 
   // Calcular cartas seleccionadas por mazo
   const selectedWords = words.filter((card) => card.state === 'selected').length;
   const selectedImages = images.filter((card) => card.state === 'selected').length;
   const selectedCount = selectedWords + selectedImages;
-
-  // Calcular cartas volteadas por mazo
-  const flippedWords = words.filter((card) => card.state === 'flipped').length;
-  const flippedImages = images.filter((card) => card.state === 'flipped').length;
 
   return (
     <div className="app">
@@ -383,41 +245,37 @@ function App() {
         selectedWords={selectedWords}
         selectedImages={selectedImages}
         selectedCount={selectedCount}
-        flippedWords={flippedWords}
-        flippedImages={flippedImages}
+        revealedPairs={revealedPairs}
         onFlipSelected={handleFlipSelected}
         onReset={handleReset}
-        onOpenConfig={() => setIsConfigOpen(true)}
         darkMode={darkMode}
         onToggleDarkMode={() => setDarkMode(!darkMode)}
+        isShuffling={isShuffling}
+        isRevealing={isRevealing}
       />
 
-      <DeckConfig
-        isOpen={isConfigOpen}
-        onClose={() => setIsConfigOpen(false)}
-        wordCards={words}
-        imageCards={images}
-        onUpdateCards={handleUpdateCards}
-      />
-
-      <div className="decks-container" ref={decksContainerRef}>
-        <Deck
-          title="📝 Mazo de Palabras"
-          cards={words}
-          onCardSelect={handleCardSelect}
-          resetScroll={scrollReset}
-          deckGridRef={wordDeckRef}
-          canFlipCards={canFlipCards}
+      <div className="main-content">
+        <RevealArea
+          wordCard={revealedWordCard}
+          imageCard={revealedImageCard}
+          animationKey={revealKey}
         />
 
-        <Deck
-          title="🖼️ Mazo de Imágenes"
-          cards={images}
-          onCardSelect={handleCardSelect}
-          resetScroll={scrollReset}
-          deckGridRef={imageDeckRef}
-          canFlipCards={canFlipCards}
-        />
+        <div className="decks-container" ref={decksContainerRef}>
+          <Deck
+            title="📝 Mazo de Palabras"
+            cards={words}
+            onCardSelect={handleCardSelect}
+            deckGridRef={wordDeckRef}
+          />
+
+          <Deck
+            title="🖼️ Mazo de Imágenes"
+            cards={images}
+            onCardSelect={handleCardSelect}
+            deckGridRef={imageDeckRef}
+          />
+        </div>
       </div>
     </div>
   );

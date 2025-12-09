@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -11,7 +11,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      enableRemoteModule: false
+      enableRemoteModule: false,
+      preload: path.join(__dirname, 'preload.js')
     },
     icon: path.join(__dirname, 'build', 'icon.png'),
     title: 'Duetto'
@@ -30,6 +31,26 @@ function createWindow() {
 
   // Opcional: Menú personalizado o sin menú
   // mainWindow.setMenu(null); // Descomentar para quitar el menú
+
+  // Configurar handlers IPC
+  setupIpcHandlers(mainWindow);
+
+  return mainWindow;
+}
+
+// Configurar los handlers de IPC
+function setupIpcHandlers(mainWindow) {
+  // Toggle fullscreen
+  ipcMain.on('toggle-fullscreen', () => {
+    const isFullscreen = mainWindow.isFullScreen();
+    mainWindow.setFullScreen(!isFullscreen);
+    mainWindow.webContents.send('fullscreen-changed', !isFullscreen);
+  });
+
+  // Cerrar aplicación
+  ipcMain.on('close-app', () => {
+    mainWindow.close();
+  });
 }
 
 // Crear ventana cuando Electron esté listo

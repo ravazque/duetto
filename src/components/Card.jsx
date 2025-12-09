@@ -7,14 +7,12 @@ import './Card.css';
  * Props:
  * - card: objeto con {id, type, content, state}
  * - onSelect: función para manejar la selección de la carta
- * - canFlip: flag que indica si la carta puede voltearse
  *
  * Estados posibles:
  * - faceDown: carta boca abajo, no seleccionada
- * - selected: carta seleccionada pero aún boca abajo
- * - flipped: carta volteada mostrando su contenido
+ * - selected: carta seleccionada
  */
-const Card = ({ card, onSelect, canFlip }) => {
+const Card = ({ card, onSelect }) => {
   const handleClick = () => {
     // Solo permitir selección si está boca abajo o ya seleccionada
     if (card.state === 'faceDown' || card.state === 'selected') {
@@ -22,15 +20,9 @@ const Card = ({ card, onSelect, canFlip }) => {
     }
   };
 
-  // Determinar la clase de estado para animaciones
-  const stateClass = card.state === 'ready-to-flip' ? 'flipped' : card.state;
-
-  // Las cartas previamente volteadas deben mantener el estado flipped (excepto si están resetting)
-  const actualStateClass = card.state === 'resetting' ? 'resetting' : (card.previouslyFlipped ? 'flipped' : stateClass);
-
   return (
     <div
-      className={`card ${actualStateClass} ${card.type} ${card.state !== 'resetting' && card.previouslyFlipped ? 'previously-flipped' : ''} ${canFlip || card.previouslyFlipped ? 'can-flip' : ''}`}
+      className={`card ${card.state} ${card.type}`}
       onClick={handleClick}
     >
       <div className="card-inner">
@@ -62,11 +54,7 @@ const Card = ({ card, onSelect, canFlip }) => {
             </div>
           ) : (
             <div className="card-image">
-              {card.imageData ? (
-                <img src={card.imageData} alt="Carta" className="card-image-img" />
-              ) : (
-                card.content
-              )}
+              <img src={card.content} alt="Carta" className="card-image-img" />
             </div>
           )}
         </div>

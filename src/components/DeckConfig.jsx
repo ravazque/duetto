@@ -1,194 +1,83 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './DeckConfig.css';
 
 /**
- * Componente DeckConfig - Configuración de mazos
+ * Componente de Información - Modal informativo sobre la aplicación
  *
- * Permite editar:
- * - Cantidad de cartas por mazo
- * - Contenido de cada carta (palabras/emojis)
+ * Muestra información sobre los mazos y la aplicación
  */
-const DeckConfig = ({ isOpen, onClose, wordCards, imageCards, onUpdateCards }) => {
-  const [activeTab, setActiveTab] = useState('words'); // 'words' o 'images'
-  const [editingWords, setEditingWords] = useState(wordCards);
-  const [editingImages, setEditingImages] = useState(imageCards);
-
-  // Sincronizar estados locales solo cuando se abra el modal (de cerrado a abierto)
-  useEffect(() => {
-    if (isOpen) {
-      setEditingWords([...wordCards]);
-      setEditingImages([...imageCards]);
-      setActiveTab('words'); // Resetear a tab de palabras al abrir
-    }
-  }, [isOpen]); // Solo depende de isOpen
-
+const DeckConfig = ({ isOpen, onClose, wordCards, imageCards }) => {
   if (!isOpen) return null;
-
-  const handleWordChange = (index, newContent) => {
-    // No permitir espacios en las palabras
-    if (newContent.includes(' ')) {
-      return;
-    }
-
-    // Limitar a 12 caracteres máximo por palabra individual
-    const validContent = newContent.length <= 10 ? newContent : editingWords[index].content;
-
-    const updated = [...editingWords];
-    updated[index] = { ...updated[index], content: validContent };
-    setEditingWords(updated);
-  };
-
-  const handleImageChange = (index, newContent) => {
-    // No permitir espacios
-    if (newContent.includes(' ')) {
-      return;
-    }
-
-    // Convertir a array de caracteres/emojis Unicode
-    const chars = [...newContent];
-
-    // Solo permitir 1 carácter o emoticono
-    if (chars.length > 1) {
-      return;
-    }
-
-    const updated = [...editingImages];
-    updated[index] = { ...updated[index], content: newContent, imageData: null };
-    setEditingImages(updated);
-  };
-
-  const handleImageFileChange = (index, file) => {
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const updated = [...editingImages];
-        updated[index] = { ...updated[index], content: '', imageData: e.target.result };
-        setEditingImages(updated);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemoveImage = (index) => {
-    const updated = [...editingImages];
-    updated[index] = { ...updated[index], content: '❓', imageData: null };
-    setEditingImages(updated);
-  };
-
-  // Funciones de añadir/eliminar cartas eliminadas - los mazos siempre tienen 44 cartas
-
-  const handleSave = () => {
-    onUpdateCards(editingWords, editingImages);
-    onClose();
-  };
-
-  const handleCancel = () => {
-    setEditingWords(wordCards);
-    setEditingImages(imageCards);
-    onClose();
-  };
 
   return (
     <div className="config-overlay">
       <div className="config-panel">
         <div className="config-header">
-          <h2>⚙️ Configuración de Mazos</h2>
-          <button className="close-btn" onClick={handleCancel}>✕</button>
+          <h2>ℹ️ Información de la Aplicación</h2>
+          <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
-        <div className="config-body">
-          <div className="config-tabs">
-            <button
-              className={`tab ${activeTab === 'words' ? 'active' : ''}`}
-              onClick={() => setActiveTab('words')}
-            >
-              📝 Palabras ({editingWords.length})
-            </button>
-            <button
-              className={`tab ${activeTab === 'images' ? 'active' : ''}`}
-              onClick={() => setActiveTab('images')}
-            >
-              🖼️ Imágenes ({editingImages.length})
-            </button>
-          </div>
+        <div className="config-body info-content">
+          <section className="info-section">
+            <h3>🎴 Acerca de Duetto</h3>
+            <p>
+              Duetto es una aplicación de cartas proyectivas para terapia y autoconocimiento,
+              inspirada en las OH Cards. Combina palabras e imágenes para facilitar procesos
+              terapéuticos y exploración emocional.
+            </p>
+          </section>
 
-
-
-          <div className="cards-editor">
-            {activeTab === 'words' ? (
-              <div className="cards-list">
-                {editingWords.map((card, index) => (
-                  <div key={card.id} className="card-edit-row">
-                    <span className="card-number">{index + 1}</span>
-                    <input
-                      type="text"
-                      value={card.content}
-                      onChange={(e) => handleWordChange(index, e.target.value)}
-                      className="card-input"
-                      placeholder="PALABRA"
-                    />
-                  </div>
-                ))}
+          <section className="info-section">
+            <h3>📊 Composición de los Mazos</h3>
+            <div className="deck-info">
+              <div className="deck-stat">
+                <span className="stat-icon">📝</span>
+                <div className="stat-details">
+                  <strong>Mazo de Palabras</strong>
+                  <p>{wordCards.length} cartas con conceptos cuidadosamente seleccionados</p>
+                </div>
               </div>
-            ) : (
-              <div className="cards-list">
-                {editingImages.map((card, index) => (
-                  <div key={card.id} className="card-edit-row image-card-row">
-                    <span className="card-number">{index + 1}</span>
-
-                    {card.imageData ? (
-                      // Modo imagen: mostrar preview y opción de eliminar
-                      <div className="image-preview-container">
-                        <img src={card.imageData} alt="Preview" className="image-preview" />
-                        <button
-                          className="btn-remove-image"
-                          onClick={() => handleRemoveImage(index)}
-                          title="Eliminar imagen"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    ) : (
-                      // Modo emoji/texto: mostrar input y botón de carga
-                      <>
-                        <input
-                          type="text"
-                          value={card.content}
-                          onChange={(e) => handleImageChange(index, e.target.value)}
-                          className="card-input card-input-emoji"
-                          placeholder="Emoji"
-                          disabled={!!card.imageData}
-                        />
-                        <span className="emoji-preview">
-                          {card.content ? (
-                            // Extraer el primer emoji/carácter Unicode completo
-                            [...card.content][0] || ''
-                          ) : ''}
-                        </span>
-                        <label className="btn-upload-image" title="Cargar imagen">
-                          📷
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageFileChange(index, e.target.files[0])}
-                            style={{ display: 'none' }}
-                          />
-                        </label>
-                      </>
-                    )}
-                  </div>
-                ))}
+              <div className="deck-stat">
+                <span className="stat-icon">🖼️</span>
+                <div className="stat-details">
+                  <strong>Mazo de Imágenes</strong>
+                  <p>{imageCards.length} cartas con símbolos visuales proyectivos</p>
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          </section>
+
+          <section className="info-section">
+            <h3>🎯 Cómo Usar la Aplicación</h3>
+            <ol className="usage-steps">
+              <li>Desplázate por los mazos y selecciona las cartas que te llamen la atención</li>
+              <li>Puedes seleccionar una carta de cada mazo (máximo 1 por mazo)</li>
+              <li>Presiona el botón "✨ Revelar carta/s" para voltear las cartas seleccionadas</li>
+              <li>Reflexiona sobre la combinación de palabra + imagen que obtuviste</li>
+              <li>Usa "🔄 Reiniciar / Mezclar" cuando quieras comenzar una nueva sesión</li>
+            </ol>
+          </section>
+
+          <section className="info-section">
+            <h3>⚙️ Características</h3>
+            <ul className="features-list">
+              <li><strong>100% Offline:</strong> Toda la aplicación funciona sin conexión a internet</li>
+              <li><strong>Privacidad Total:</strong> Ningún dato sale de tu computadora</li>
+              <li><strong>Mezcla Aleatoria:</strong> Los mazos se barajan al iniciar y al reiniciar</li>
+              <li><strong>Modo Oscuro:</strong> Alterna entre tema claro y oscuro según tu preferencia</li>
+              <li><strong>Pantalla Completa:</strong> Usa el modo inmersivo para tus sesiones</li>
+            </ul>
+          </section>
+
+          <section className="info-section version-info">
+            <p><strong>Versión:</strong> 1.3.1</p>
+            <p><strong>Desarrollado para:</strong> Procesos terapéuticos y autoexploración</p>
+          </section>
         </div>
 
         <div className="config-footer">
-          <button className="btn btn-secondary" onClick={handleCancel}>
-            Cancelar
-          </button>
-          <button className="btn btn-primary" onClick={handleSave}>
-            Guardar Cambios
+          <button className="btn btn-primary" onClick={onClose}>
+            Cerrar
           </button>
         </div>
       </div>

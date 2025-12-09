@@ -1,13 +1,19 @@
-// Datos de ejemplo para las cartas - 44 cartas por mazo (88 total)
+// Datos para las cartas - 88 cartas de palabras + 84 cartas de imágenes
+// Estas palabras e imágenes son FIJAS y no se pueden editar desde la interfaz
 
-// Lista de palabras para el mazo
+// Lista de palabras para el mazo (88 palabras fijas)
 const wordList = [
-  'AMOR', 'MIEDO', 'ESPERANZA', 'SOLEDAD', 'LIBERTAD', 'ALEGRÍA', 'TRISTEZA', 'FAMILIA',
-  'FUERZA', 'PAZ', 'CONFIANZA', 'CAMBIO', 'DOLOR', 'VALENTÍA', 'FUTURO', 'PASADO',
-  'SUEÑO', 'RABIA', 'PERDÓN', 'CULPA', 'GRATITUD', 'ACEPTACIÓN', 'TIEMPO', 'HOGAR',
-  'ÉXITO', 'FRACASO', 'SALUD', 'ENFERMEDAD', 'TRABAJO', 'DESCANSO', 'AMIGO', 'ENEMIGO',
-  'VERDAD', 'MENTIRA', 'LUZ', 'OSCURIDAD', 'VIDA', 'MUERTE', 'RISA', 'LLANTO',
-  'PODER', 'DEBILIDAD', 'SABIDURÍA', 'IGNORANCIA'
+  'ESCONDER', 'VACILACIÓN', 'ODIO', 'HÁBITO', 'ERÓTICO', 'JACTARSE', 'HOMOSEXUAL', 'ESPERANZA',
+  'JUEGO DE PODER', 'RESENTIR', 'HOGAR', 'AGARRAR', 'RESISTIR', 'RETIRO', 'RÍGIDO', 'RIVAL',
+  'MADRE', 'DESNUDO', 'DEUDA', 'HOMBRES', 'DOLOR', 'POSTURA', 'HUMILLAR', 'VIOLAR',
+  'ESPERAR', 'AGOTADO', 'SABIO', 'MUJERES', 'MARAVILLOSO', 'MALO', 'AMOR', 'EXPERTO',
+  'CÓMICO', 'OBSESIÓN', 'CONFORMAR', 'DEPENDER', 'CÓLERA', 'SOLO', 'DISCULPA', 'ANSIEDAD',
+  'APARIENCIA', 'ATAQUE', 'ATRACCIÓN', 'COMIENZO', 'CONFUSIÓN', 'DESTRUIR', 'DESGRACIA', 'DESAGRADABLE',
+  'ABURRIMIENTO', 'JEFE', 'CAMBIO', 'SUEÑO', 'ELIMINAR', 'EMBARAZOSO', 'FASCINACIÓN', 'PADRE',
+  'MIEDO', 'JUEGO', 'DAR', 'PESAR', 'CULPA', 'DEBERÍA', 'COMPARTIR', 'VERGÜENZA',
+  'METO LA PATA', 'ESCLAVO', 'PARAR', 'PUDRIR', 'ALEGRÍA', 'INTIMIDAR', 'RISA', 'SOLTAR',
+  'EXTRAÑOS', 'MENTIRA', 'ESTÚPIDO', 'ÉXITO', 'SUPRIMIR', 'TOMAR', 'AMENAZA', 'FEO',
+  'VÍCTIMA', 'CICLO', 'PELIGRO', '¡ADELANTE!', 'FRACASAR', 'FIRME', 'CARIÑO', 'NIÑO'
 ];
 
 export const wordCards = wordList.map((word, index) => ({
@@ -17,24 +23,16 @@ export const wordCards = wordList.map((word, index) => ({
   state: 'faceDown'
 }));
 
-// Lista de emojis/símbolos para el mazo de imágenes
-const emojiList = [
-  '🌅', '🌊', '🏔️', '🌳', '🦋', '🌙', '⭐', '🌸',
-  '🔥', '💧', '🌈', '☀️', '🌺', '🍃', '🦅', '🐚',
-  '🕊️', '🌻', '🍂', '⛰️', '🌵', '🌴', '🌾', '🌿',
-  '🍀', '🌼', '🌷', '🥀', '🌹', '💐', '🏵️', '🌱',
-  '🍄', '🌰', '🐌', '🦗', '🐛', '🐜', '🐝', '🐞',
-  '🦂', '🕷️', '🦟', '🦠'
-];
+// Lista de imágenes para el mazo (84 imágenes fijas)
+// Las imágenes están en public/images/ y se cargan como card-01.png, card-02.png, etc.
+const imageList = Array.from({ length: 84 }, (_, index) => {
+  const cardNumber = String(index + 1).padStart(2, '0');
+  return `/images/card-${cardNumber}.png`;
+});
 
-export const imageCards = emojiList.map((emoji, index) => ({
+export const imageCards = imageList.map((imagePath, index) => ({
   id: `i${index + 1}`,
   type: 'image',
-  content: emoji,
+  content: imagePath,
   state: 'faceDown'
 }));
-
-// NOTA IMPORTANTE:
-// Para tu versión final, las imágenes deberían ser URLs o rutas a archivos:
-// content: '/images/card-01.jpg'
-// Por ahora uso emojis para hacer la demo funcional sin necesidad de imágenes

@@ -36,14 +36,24 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.main-content {
+  display: flex;
+  gap: 20px;
+  padding: 0 20px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .decks-container {
   display: grid;
   grid-template-columns: 1fr;
   gap: 30px;
-  padding: 0 20px 30px 20px;
-  max-width: 100%;
-  overflow-x: hidden;
+  padding: 0 20px 30px 0;
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
 }
 
 /* Responsive */
@@ -149,17 +159,8 @@ body.dark-mode {
   color: #e0e0ff;
 }
 
-/* Botones en modo oscuro */
-.dark-mode .btn {
-  background: #4a5568;
-  color: #ffffff;
-  border-color: #5a6578;
-}
-
-.dark-mode .btn:hover:not(:disabled) {
-  background: #5a6578;
-  border-color: #6a7588;
-}
+/* Botones genéricos en modo oscuro - NO aplicar a botones con clases específicas */
+/* Removidos para permitir que los estilos específicos funcionen correctamente */
 
 .dark-mode .btn-primary {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
@@ -172,11 +173,23 @@ body.dark-mode {
 }
 
 .dark-mode .btn-secondary {
-  background: #5a6578;
+  background: rgba(90, 101, 120, 0.6);
+  color: white;
+  border-color: rgba(90, 101, 120, 0.8);
 }
 
 .dark-mode .btn-secondary:hover:not(:disabled) {
-  background: #6a7588;
+  background: rgba(107, 114, 128, 0.8);
+  color: white;
+  border-color: rgba(107, 114, 128, 1);
+}
+
+.dark-mode .btn-secondary:disabled {
+  background: rgba(60, 68, 82, 0.4);
+  color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(60, 68, 82, 0.6);
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .dark-mode .btn-theme {
@@ -191,6 +204,38 @@ body.dark-mode {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* Los botones en modo oscuro mantienen los mismos colores que en modo claro */
+.dark-mode .btn-fullscreen {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+}
+
+.dark-mode .btn-fullscreen:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(96, 165, 250, 0.4);
+}
+
+.dark-mode .btn-close {
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3);
+}
+
+.dark-mode .btn-close:hover {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
+}
+
+.dark-mode .revealed-pairs-count {
+  color: #e0e0ff;
+  background: rgba(50, 50, 70, 0.5);
+  border-color: rgba(100, 100, 150, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Configurador en modo oscuro */
