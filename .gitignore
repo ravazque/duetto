@@ -42,7 +42,6 @@ build/*.icns
 # Carpetas Ocultas y
 .claude/
 .vscode
-CLAUDE.md
 docs/images.pdf
 docs/words.pdf
 
