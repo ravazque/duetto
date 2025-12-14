@@ -38,19 +38,15 @@ const Card = ({ card, onSelect }) => {
         {/* Anverso de la carta */}
         <div className="card-front">
           {card.type === 'word' ? (
-            <div
-              className="card-word"
-              style={{
-                fontSize: card.content.length > 6
-                  ? `${Math.max(0.4, 1.4 - (card.content.length - 6) * 0.1)}rem`
-                  : '1.4rem',
-                wordBreak: 'keep-all',
-                overflowWrap: 'normal',
-                whiteSpace: 'nowrap',
-                lineHeight: card.content.length > 10 ? '1.2' : '1.3'
-              }}
-            >
-              {card.content}
+            <div className="card-word">
+              {/* Dividir palabras compuestas en líneas */}
+              {card.content.includes(' ') ? (
+                card.content.split(' ').map((word, index) => (
+                  <span key={index} className="card-word-line">{word}</span>
+                ))
+              ) : (
+                card.content
+              )}
             </div>
           ) : (
             <div className="card-image">

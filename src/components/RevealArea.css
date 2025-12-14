@@ -1,7 +1,11 @@
+/* ============================================
+   REVEAL AREA - Escalado Fluido con Variables CSS
+   ============================================ */
+
 .reveal-area {
   flex-shrink: 0;
-  width: 450px;
-  padding: 25px;
+  width: var(--reveal-area-width);
+  padding: var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,14 +17,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 550px;
+  min-height: calc(var(--reveal-card-height) + var(--spacing-lg));
 }
 
 /* Stack de cartas estilo OH */
 .oh-cards-stack {
   position: relative;
-  width: 400px;
-  height: 520px;
+  width: var(--reveal-card-width);
+  height: var(--reveal-card-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,12 +33,12 @@
 /* Carta de palabra (más grande, fondo) */
 .oh-card-word {
   position: absolute;
-  width: 400px;
-  height: 520px;
+  width: var(--reveal-card-width);
+  height: var(--reveal-card-height);
   background: white;
-  border-radius: 18px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  border: 3px solid #667eea;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-strong);
+  border: 3px solid var(--color-primary);
   z-index: 1;
   overflow: hidden;
 }
@@ -42,10 +46,10 @@
 /* Textos en los bordes de la carta de palabra */
 .oh-card-border-text {
   position: absolute;
-  color: #667eea;
+  color: var(--color-primary);
   font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: 2.5px;
+  font-size: var(--font-2xl);
+  letter-spacing: clamp(2px, 0.3vw, 5px);
   white-space: nowrap;
   text-transform: uppercase;
   user-select: none;
@@ -53,45 +57,31 @@
 }
 
 .oh-card-border-text.top {
-  top: 15px;
+  top: var(--spacing-md);
   left: 50%;
   transform: translateX(-50%);
 }
 
 .oh-card-border-text.bottom {
-  bottom: 15px;
+  bottom: var(--spacing-md);
   left: 50%;
   transform: translateX(-50%);
-}
-
-.oh-card-border-text.left {
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: center;
-}
-
-.oh-card-border-text.right {
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  transform-origin: center;
 }
 
 /* Carta de imagen (superpuesta, más pequeña) */
 .oh-card-image {
   position: absolute;
-  width: 320px;
-  height: 400px;
+  width: var(--reveal-image-width);
+  height: var(--reveal-image-height);
   background: white;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
-  border: 3px solid #764ba2;
+  border: 3px solid var(--color-secondary);
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: var(--spacing-sm);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -99,10 +89,11 @@
 }
 
 .oh-card-image img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
+  /* PNG más grande - ocupa todo el espacio disponible */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
 }
 
 /* Placeholder cuando no hay cartas reveladas */
@@ -111,14 +102,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: var(--spacing-md);
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
-  padding: 40px;
+  padding: var(--spacing-xl);
 }
 
 .placeholder-icon {
-  font-size: 5rem;
+  font-size: var(--emoji-lg);
   opacity: 0.3;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -135,7 +126,7 @@
 }
 
 .reveal-placeholder p {
-  font-size: 1.1rem;
+  font-size: var(--font-md);
   font-weight: 600;
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -172,233 +163,21 @@
   }
 }
 
-/* Responsive */
-/* Pantallas ultra grandes (4K, 2560px+) */
-@media (min-width: 2560px) {
-  .reveal-area {
-    width: 650px;
-    padding: 35px;
-  }
-
-  .reveal-container {
-    min-height: 800px;
-  }
-
-  .oh-cards-stack {
-    width: 580px;
-    height: 750px;
-  }
-
-  .oh-card-word {
-    width: 580px;
-    height: 750px;
-    border-radius: 22px;
-  }
-
-  .oh-card-image {
-    width: 464px;
-    height: 580px;
-    border-radius: 18px;
-  }
-
-  .oh-card-border-text {
-    font-size: 2.2rem;
-    letter-spacing: 3.5px;
-  }
-
-  .oh-card-border-text.top,
-  .oh-card-border-text.bottom {
-    font-size: 2.2rem;
-  }
-
-  .oh-card-border-text.left,
-  .oh-card-border-text.right {
-    font-size: 2.2rem;
-  }
-
-  .placeholder-icon {
-    font-size: 8rem;
-  }
-
-  .reveal-placeholder p {
-    font-size: 1.6rem;
-  }
-}
-
-/* Pantallas grandes (Full HD, 1920px+) */
-@media (min-width: 1920px) and (max-width: 2559px) {
-  .reveal-area {
-    width: 550px;
-    padding: 30px;
-  }
-
-  .reveal-container {
-    min-height: 680px;
-  }
-
-  .oh-cards-stack {
-    width: 490px;
-    height: 630px;
-  }
-
-  .oh-card-word {
-    width: 490px;
-    height: 630px;
-    border-radius: 20px;
-  }
-
-  .oh-card-image {
-    width: 392px;
-    height: 490px;
-    border-radius: 16px;
-  }
-
-  .oh-card-border-text {
-    font-size: 1.8rem;
-    letter-spacing: 3px;
-  }
-
-  .placeholder-icon {
-    font-size: 6.5rem;
-  }
-
-  .reveal-placeholder p {
-    font-size: 1.4rem;
-  }
-}
-
-/* Pantallas estándar (1367px-1919px) - base mejorado */
-@media (min-width: 1367px) and (max-width: 1919px) {
-  .reveal-area {
-    width: 450px;
-  }
-
-  .reveal-container {
-    min-height: 550px;
-  }
-
-  .oh-cards-stack {
-    width: 400px;
-    height: 520px;
-  }
-
-  .oh-card-word {
-    width: 400px;
-    height: 520px;
-  }
-
-  .oh-card-image {
-    width: 320px;
-    height: 400px;
-  }
-
-  .oh-card-border-text {
-    font-size: 1.5rem;
-  }
-}
-
-/* Pantallas pequeñas (1024px-1366px) */
-@media (min-width: 1024px) and (max-width: 1366px) {
-  .reveal-area {
-    width: 360px;
-    padding: 18px;
-  }
-
-  .reveal-container {
-    min-height: 480px;
-  }
-
-  .oh-cards-stack {
-    width: 315px;
-    height: 405px;
-  }
-
-  .oh-card-word {
-    width: 315px;
-    height: 405px;
-  }
-
-  .oh-card-image {
-    width: 252px;
-    height: 315px;
-  }
-
-  .oh-card-border-text {
-    font-size: 1.2rem;
-  }
-}
-
-/* Tablets y pantallas medianas (hasta 1023px) */
-@media (max-width: 1023px) {
-  .reveal-area {
-    width: 320px;
-  }
-
-  .oh-cards-stack {
-    width: 280px;
-    height: 380px;
-  }
-
-  .oh-card-word {
-    width: 280px;
-    height: 380px;
-  }
-
-  .oh-card-image {
-    width: 220px;
-    height: 290px;
-  }
-
-  .oh-card-border-text {
-    font-size: 1.1rem;
-  }
-}
-
+/* Breakpoint móvil para layout vertical */
 @media (max-width: 768px) {
   .reveal-area {
     width: 100%;
-    padding: 15px;
-    min-height: 350px;
+    padding: var(--spacing-sm);
+    min-height: clamp(300px, 50vh, 400px);
   }
 
   .reveal-container {
-    min-height: 350px;
-  }
-
-  .oh-cards-stack {
-    width: 240px;
-    height: 320px;
-  }
-
-  .oh-card-word {
-    width: 240px;
-    height: 320px;
-  }
-
-  .oh-card-image {
-    width: 190px;
-    height: 250px;
+    min-height: clamp(280px, 45vh, 380px);
   }
 
   .oh-card-border-text {
-    font-size: 0.9rem;
+    font-size: var(--font-sm);
     letter-spacing: 1px;
-  }
-
-  .oh-card-border-text.top {
-    top: 10px;
-  }
-
-  .oh-card-border-text.bottom {
-    bottom: 10px;
-  }
-
-  .oh-card-border-text.left {
-    left: 10px;
-  }
-
-  .oh-card-border-text.right {
-    right: 10px;
   }
 }
 
@@ -406,7 +185,7 @@
 body.dark-mode .oh-card-word,
 body.dark-mode .oh-card-image {
   background: #1a1a2e;
-  border-color: #667eea;
+  border-color: var(--color-primary);
 }
 
 body.dark-mode .oh-card-border-text {

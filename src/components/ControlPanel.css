@@ -1,17 +1,21 @@
+/* ============================================
+   CONTROL PANEL - Escalado Fluido con Variables CSS
+   ============================================ */
+
 .control-panel {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-glass-strong);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   backdrop-filter: blur(10px);
-  padding: 15px 20px;
-  margin: 0 20px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin: 0 var(--spacing-md);
 }
 
 .control-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: var(--spacing-md);
   flex-wrap: wrap;
 }
 
@@ -19,30 +23,30 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 .counter-group {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-xs);
   align-items: center;
 }
 
 .counter-label {
-  font-size: 0.9rem;
+  font-size: var(--font-sm);
   font-weight: 600;
-  color: white;
+  color: var(--text-light);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .selected-count,
 .flipped-count {
-  font-size: 0.95rem;
+  font-size: var(--font-sm);
   font-weight: bold;
-  color: white;
-  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-light);
+  background: var(--bg-glass-strong);
   backdrop-filter: blur(10px);
-  padding: 6px 12px;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 20px;
   display: inline-block;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -54,12 +58,12 @@
 }
 
 .revealed-pairs-count {
-  font-size: 1rem;
+  font-size: var(--font-md);
   font-weight: bold;
-  color: #333;
+  color: var(--text-primary);
   background: rgba(240, 240, 245, 0.5);
   backdrop-filter: blur(10px);
-  padding: 6px 14px;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 18px;
   display: inline-block;
   border: 1px solid rgba(200, 200, 210, 0.4);
@@ -70,20 +74,20 @@
 
 .control-buttons {
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
 
 .btn {
-  padding: 10px 20px;
-  font-size: 0.9rem;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font);
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 120px;
+  box-shadow: var(--shadow-light);
+  min-width: var(--btn-min-width);
 }
 
 .btn:hover:not(:disabled) {
@@ -96,18 +100,18 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%);
+  color: var(--text-light);
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  background: linear-gradient(135deg, var(--color-success-dark) 0%, #047857 100%);
   box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
 }
 
 .btn-primary:disabled {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%);
   cursor: not-allowed;
   opacity: 0.62;
   box-shadow: none;
@@ -117,14 +121,14 @@
 
 .btn-secondary {
   background: rgba(255, 255, 255, 0.95);
-  color: #667eea;
-  border: 2px solid #667eea;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
+  background: var(--color-primary);
+  color: var(--text-light);
+  border-color: var(--color-primary);
 }
 
 .btn-secondary:disabled {
@@ -136,23 +140,22 @@
 }
 
 .btn-config {
-  background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
+  background: var(--text-light);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
 }
 
 .btn-config:hover {
-  background: #667eea;
-  color: white;
+  background: var(--color-primary);
+  color: var(--text-light);
 }
 
 .btn-theme {
-  /* Tema oscuro para el botón en modo claro (luna 🌙) */
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  color: white;
-  min-width: 60px;
-  font-size: 1.2rem;
-  padding: 10px 15px;
+  color: var(--text-light);
+  min-width: clamp(50px, 5vw, 70px);
+  font-size: var(--font-lg);
+  padding: var(--btn-padding-y) var(--spacing-sm);
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -165,10 +168,10 @@
 
 .btn-fullscreen {
   background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-  color: white;
-  min-width: 60px;
-  font-size: 1.2rem;
-  padding: 10px 15px;
+  color: var(--text-light);
+  min-width: clamp(50px, 5vw, 70px);
+  font-size: var(--font-lg);
+  padding: var(--btn-padding-y) var(--spacing-sm);
   border: 2px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
   display: flex;
@@ -184,66 +187,46 @@
 }
 
 .btn-close {
-  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
-  color: white;
-  min-width: 60px;
-  font-size: 1.3rem;
-  padding: 10px 15px;
+  background: linear-gradient(135deg, #f87171 0%, var(--color-danger) 100%);
+  color: var(--text-light);
+  min-width: clamp(50px, 5vw, 70px);
+  font-size: clamp(1.1rem, 1.3vw, 1.5rem);
+  padding: var(--btn-padding-y) var(--spacing-sm);
   border: 2px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3);
   font-weight: 700;
 }
 
 .btn-close:hover {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
 }
 
-/* Responsive */
+/* Breakpoint móvil */
 @media (max-width: 768px) {
   .control-panel {
-    padding: 0 15px 15px 15px;
+    padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
   }
 
   .control-row {
     flex-direction: column;
-    gap: 12px;
+    gap: var(--spacing-sm);
   }
 
   .control-info {
-    gap: 15px;
-  }
-
-  .counter-label {
-    font-size: 0.85rem;
-  }
-
-  .selected-count,
-  .flipped-count {
-    font-size: 0.85rem;
-    padding: 5px 10px;
-  }
-
-  .btn {
-    min-width: 100px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
+    gap: var(--spacing-sm);
   }
 }
 
 @media (max-width: 480px) {
   .control-panel {
-    padding: 0 10px 15px 10px;
+    padding: 0 var(--spacing-xs) var(--spacing-sm) var(--spacing-xs);
   }
 
   .control-info {
     width: 100%;
     justify-content: center;
-  }
-
-  .counter-group {
-    font-size: 0.8rem;
   }
 
   .control-buttons {

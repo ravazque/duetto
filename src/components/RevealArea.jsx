@@ -21,8 +21,6 @@ const RevealArea = ({ wordCard, imageCard, animationKey }) => {
               <div className="oh-card oh-card-word">
                 <div className="oh-card-border-text top">{wordCard.content}</div>
                 <div className="oh-card-border-text bottom">{wordCard.content}</div>
-                <div className="oh-card-border-text left">{wordCard.content}</div>
-                <div className="oh-card-border-text right">{wordCard.content}</div>
               </div>
             )}
 

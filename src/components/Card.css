@@ -1,7 +1,11 @@
-/* Contenedor de la carta - Ratio 2:3 */
+/* ============================================
+   CARD - Escalado Fluido con Variables CSS
+   ============================================ */
+
+/* Contenedor de la carta - Ratio 2:3 mantenido con aspect-ratio */
 .card {
-  width: 140px;
-  height: 210px;
+  width: var(--card-width);
+  aspect-ratio: 2 / 3;
   perspective: 1000px;
   cursor: pointer;
   position: relative;
@@ -48,16 +52,16 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-light);
 }
 
 /* Reverso de la carta */
 .card-back {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-gradient);
   border: 3px solid #fff;
 }
 
@@ -72,7 +76,7 @@
 }
 
 .card-type-indicator {
-  font-size: 3rem;
+  font-size: var(--emoji-sm);
   font-weight: bold;
   color: rgba(255, 255, 255, 0.3);
 }
@@ -81,32 +85,42 @@
 .card-front {
   background: white;
   transform: rotateY(180deg);
-  padding: 10px;
+  padding: var(--spacing-xs);
 }
 
 /* Carta revelada */
 .card.flipped .card-front {
-  border: 3px solid #10b981;
+  border: 3px solid var(--color-success);
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
 .card-word {
+  /* Tamaño de fuente proporcional a la carta */
+  font-size: clamp(0.9rem, calc(var(--card-width) * 0.11), 1.8rem);
   font-weight: bold;
-  color: #333;
+  color: var(--text-primary);
   text-align: center;
   overflow: hidden;
-  line-height: 1.3;
+  line-height: 1.1;
   max-height: 100%;
-  padding: 4px;
+  padding: var(--spacing-xs);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  word-break: break-word;
+  gap: 0;
+}
+
+/* Cada línea de palabra compuesta */
+.card-word-line {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .card-image {
-  font-size: 4rem;
+  font-size: var(--emoji-md);
   text-align: center;
   width: 100%;
   height: 100%;
@@ -120,16 +134,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 /* Indicador de selección */
 .selection-indicator {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 35px;
-  height: 35px;
+  top: var(--spacing-xs);
+  right: var(--spacing-xs);
+  width: var(--indicator-size);
+  height: var(--indicator-size);
   background: #4ade80;
   border-radius: 50%;
   display: flex;
@@ -137,7 +151,7 @@
   justify-content: center;
   color: white;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: var(--indicator-font);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   animation: pop 0.3s ease;
   z-index: 10;
@@ -171,7 +185,7 @@
 }
 
 .card.moving-to-end .card-back {
-  border-color: #fbbf24;
+  border-color: var(--color-warning);
   box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
   animation: pulse-moving 0.6s ease-in-out infinite;
 }
@@ -185,143 +199,9 @@
   }
 }
 
-/* Responsive - Manteniendo ratio 2:3 */
-/* Pantallas ultra grandes (4K, 2560px+) */
-@media (min-width: 2560px) {
-  .card {
-    width: 200px;
-    height: 300px;
-  }
-
-  .card-word {
-    font-size: 1.5rem;
-  }
-
-  .card-image {
-    font-size: 6rem;
-  }
-
-  .card-type-indicator {
-    font-size: 5rem;
-  }
-
-  .selection-indicator {
-    width: 50px;
-    height: 50px;
-    font-size: 1.8rem;
-  }
-}
-
-/* Pantallas grandes (Full HD, 1920px+) */
-@media (min-width: 1920px) and (max-width: 2559px) {
-  .card {
-    width: 170px;
-    height: 255px;
-  }
-
-  .card-word {
-    font-size: 1.3rem;
-  }
-
-  .card-image {
-    font-size: 5rem;
-  }
-
-  .card-type-indicator {
-    font-size: 4rem;
-  }
-
-  .selection-indicator {
-    width: 42px;
-    height: 42px;
-    font-size: 1.5rem;
-  }
-}
-
-/* Pantallas estándar (1367px-1919px) - tamaño base */
-@media (min-width: 1367px) and (max-width: 1919px) {
-  .card {
-    width: 140px;
-    height: 210px;
-  }
-}
-
-/* Pantallas pequeñas (1024px-1366px) */
-@media (min-width: 1024px) and (max-width: 1366px) {
-  .card {
-    width: 120px;
-    height: 180px;
-  }
-
-  .card-word {
-    font-size: 0.95rem;
-  }
-
-  .card-image {
-    font-size: 3.5rem;
-  }
-
-  .card-type-indicator {
-    font-size: 2.8rem;
-  }
-}
-
-/* Tablets (768px-1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .card {
-    width: 100px;
-    height: 150px;
-  }
-
-  .card-word {
-    font-size: 0.9rem;
-  }
-
-  .card-image {
-    font-size: 3rem;
-  }
-
-  .card-type-indicator {
-    font-size: 2rem;
-  }
-}
-
-/* Móviles (hasta 767px) */
-@media (max-width: 767px) {
-  .card {
-    width: 90px;
-    height: 135px;
-  }
-
-  .card-word {
-    font-size: 0.8rem;
-  }
-
-  .card-image {
-    font-size: 2.5rem;
-  }
-
-  .card-type-indicator {
-    font-size: 2rem;
-  }
-}
-
-/* Móviles pequeños (hasta 480px) */
+/* Solo un breakpoint para móviles pequeños */
 @media (max-width: 480px) {
-  .card {
-    width: 80px;
-    height: 120px;
-  }
-
   .card-word {
-    font-size: 0.7rem;
-  }
-
-  .card-image {
-    font-size: 2rem;
-  }
-
-  .card-type-indicator {
-    font-size: 1.5rem;
+    font-size: clamp(0.7rem, calc(var(--card-width) * 0.1), 0.9rem);
   }
 }

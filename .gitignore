@@ -39,8 +39,12 @@ build/*.icns
 *.sln
 *.sw?
 
-# Claude Code (mantener local pero no en GitHub)
+# Carpetas Ocultas y
 .claude/
+.vscode
+CLAUDE.md
+docs/images.pdf
+docs/words.pdf
 
 # Environment
 .env

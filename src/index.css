@@ -1,3 +1,95 @@
+/* ============================================
+   VARIABLES CSS - Sistema de Escalado Fluido
+   ============================================ */
+:root {
+  /* Colores principales */
+  --color-primary: #667eea;
+  --color-primary-dark: #5568d3;
+  --color-secondary: #764ba2;
+  --color-success: #10b981;
+  --color-success-dark: #059669;
+  --color-danger: #ef4444;
+  --color-warning: #fbbf24;
+
+  /* Colores de texto */
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-light: white;
+
+  /* Fondos */
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-glass: rgba(255, 255, 255, 0.1);
+  --bg-glass-strong: rgba(255, 255, 255, 0.2);
+
+  /* Bordes y sombras */
+  --border-glass: rgba(255, 255, 255, 0.2);
+  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+  /* ============================================
+     ESCALADO FLUIDO - Tamaños base
+     Fórmula: clamp(min, preferred, max)
+     Preferred usa max(vw, vh) para escalar según
+     la dimensión mayor del viewport (ideal para 2K+)
+     ============================================ */
+
+  /* Cartas del mazo - Ratio 2:3 mantenido
+     Usa max(vw, vh*ratio) para que en pantallas altas
+     o anchas las cartas se escalen correctamente */
+  --card-width: clamp(90px, max(10vw, 17vh), 280px);
+  --card-height: clamp(135px, max(15vw, 25.5vh), 420px);
+
+  /* Cartas del área de revelación - Escalado moderado */
+  --reveal-card-width: clamp(300px, max(28vw, 42vh), 580px);
+  --reveal-card-height: clamp(390px, max(36vw, 54vh), 754px);
+  /* Carta de imagen - tamaño original */
+  --reveal-image-width: clamp(240px, max(22vw, 33vh), 436px);
+  --reveal-image-height: clamp(300px, max(28vw, 42vh), 545px);
+
+  /* Área de revelación ~800px */
+  --reveal-area-width: clamp(340px, max(32vw, 48vh), 800px);
+
+  /* Espaciados fluidos - combinación vw/vh */
+  --spacing-xs: clamp(6px, max(0.6vw, 0.9vh), 14px);
+  --spacing-sm: clamp(10px, max(1vw, 1.5vh), 22px);
+  --spacing-md: clamp(15px, max(1.5vw, 2.2vh), 30px);
+  --spacing-lg: clamp(20px, max(2vw, 3vh), 42px);
+  --spacing-xl: clamp(25px, max(2.5vw, 3.8vh), 52px);
+
+  /* Tipografía fluida - escalado bidimensional (aumentado) */
+  --font-xs: clamp(0.75rem, max(0.85vw, 1.2vh), 1.1rem);
+  --font-sm: clamp(0.85rem, max(1vw, 1.4vh), 1.25rem);
+  --font-md: clamp(0.95rem, max(1.1vw, 1.6vh), 1.45rem);
+  --font-lg: clamp(1.2rem, max(1.5vw, 2.1vh), 2.1rem);
+  --font-xl: clamp(1.4rem, max(1.8vw, 2.5vh), 2.5rem);
+  --font-2xl: clamp(1.6rem, max(2.2vw, 3vh), 3.2rem);
+  --font-3xl: clamp(2.2rem, max(3.2vw, 4.5vh), 4.5rem);
+
+  /* Emojis/Iconos fluidos (aumentado) */
+  --emoji-sm: clamp(1.8rem, max(2.2vw, 3vh), 3.5rem);
+  --emoji-md: clamp(3rem, max(4vw, 5.5vh), 7rem);
+  --emoji-lg: clamp(4.5rem, max(5.5vw, 7.5vh), 10rem);
+
+  /* Border radius fluido */
+  --radius-sm: clamp(6px, max(0.6vw, 0.8vh), 12px);
+  --radius-md: clamp(10px, max(1vw, 1.3vh), 18px);
+  --radius-lg: clamp(14px, max(1.4vw, 1.8vh), 24px);
+
+  /* Indicadores */
+  --indicator-size: clamp(28px, max(2.5vw, 3.2vh), 55px);
+  --indicator-font: clamp(1rem, max(1.2vw, 1.5vh), 2rem);
+
+  /* Scrollbar fluido */
+  --scrollbar-height: clamp(10px, max(1vw, 1.3vh), 20px);
+
+  /* Botones */
+  --btn-padding-y: clamp(8px, max(0.8vw, 1vh), 16px);
+  --btn-padding-x: clamp(14px, max(1.4vw, 1.8vh), 28px);
+  --btn-min-width: clamp(90px, max(9vw, 12vh), 160px);
+  --btn-font: clamp(0.8rem, max(0.9vw, 1.2vh), 1.1rem);
+}
+
 /* Reset y estilos globales */
 * {
   margin: 0;
@@ -7,30 +99,42 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-gradient);
   min-height: 100vh;
   padding: 0;
-  color: #333;
+  color: var(--text-primary);
   overflow-x: hidden;
 }
 
 #root {
   max-width: 100%;
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding-bottom: var(--spacing-lg);
   overflow-x: hidden;
 }
 
 /* Tipografía */
 h1, h2, h3 {
-  color: white;
-  margin-bottom: 1rem;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+h1 {
+  font-size: var(--font-3xl);
+}
+
+h2 {
+  font-size: var(--font-xl);
+}
+
+h3 {
+  font-size: var(--font-lg);
 }
 
 /* Utilidades */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -66,13 +170,12 @@ body.dark-mode::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 100, 150, 0.7);
 }
 
-/* Responsive */
+/* Solo breakpoint móvil para layout vertical */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
+  :root {
+    /* Ajustes para móvil - combinación vw/vh */
+    --card-width: clamp(75px, max(18vw, 10vh), 110px);
+    --card-height: clamp(112.5px, max(27vw, 15vh), 165px);
+    --reveal-area-width: 100%;
   }
 }
