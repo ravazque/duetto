@@ -1,4 +1,4 @@
-// Datos para las cartas - 88 cartas de palabras + 84 cartas de imágenes
+// Datos para las cartas - 88 cartas de palabras + 88 cartas de imágenes
 // Estas palabras e imágenes son FIJAS y no se pueden editar desde la interfaz
 
 // Lista de palabras para el mazo (88 palabras fijas)
@@ -23,11 +23,11 @@ export const wordCards = wordList.map((word, index) => ({
   state: 'faceDown'
 }));
 
-// Lista de imágenes para el mazo (84 imágenes fijas)
+// Lista de imágenes para el mazo (88 imágenes fijas)
 // Las imágenes están en public/images/ y se cargan como card-01.png, card-02.png, etc.
-const imageList = Array.from({ length: 84 }, (_, index) => {
+const imageList = Array.from({ length: 88 }, (_, index) => {
   const cardNumber = String(index + 1).padStart(2, '0');
-  return `/images/card-${cardNumber}.png`;
+  return `./images/card-${cardNumber}.png`;
 });
 
 export const imageCards = imageList.map((imagePath, index) => ({
