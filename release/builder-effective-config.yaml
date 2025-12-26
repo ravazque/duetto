@@ -1,0 +1,24 @@
+directories:
+  output: release
+  buildResources: build
+appId: com.duetto.app
+productName: Duetto
+files:
+  - filter:
+      - dist/**/*
+      - electron.js
+      - package.json
+win:
+  target:
+    - nsis
+  icon: build/icon.png
+mac:
+  target:
+    - dmg
+  icon: build/icon.png
+linux:
+  target:
+    - AppImage
+  icon: build/icon.png
+  category: Utility
+electronVersion: 39.2.3
