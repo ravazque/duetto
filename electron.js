@@ -8,6 +8,7 @@ function createWindow() {
     height: 900,
     minWidth: 800,
     minHeight: 600,
+    frame: false, // Elimina los botones de cerrar, minimizar y agrandar
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
