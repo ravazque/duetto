@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import './ControlPanel.css';
 
 /**
@@ -17,28 +16,6 @@ import './ControlPanel.css';
  * - isRevealing: boolean que indica si está en proceso de revelar
  */
 const ControlPanel = ({ selectedWords, selectedImages, selectedCount, revealedPairs, onFlipSelected, onReset, darkMode, onToggleDarkMode, isShuffling, isRevealing }) => {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  useEffect(() => {
-    // Escuchar cambios de pantalla completa desde Electron
-    if (window.electronAPI) {
-      window.electronAPI.onFullscreenChange((fullscreen) => {
-        setIsFullscreen(fullscreen);
-      });
-    }
-  }, []);
-
-  const handleToggleFullscreen = () => {
-    if (window.electronAPI) {
-      window.electronAPI.toggleFullscreen();
-    }
-  };
-
-  const handleCloseApp = () => {
-    if (window.electronAPI) {
-      window.electronAPI.closeApp();
-    }
-  };
   return (
     <div className="control-panel">
       <div className="control-row">
@@ -76,22 +53,6 @@ const ControlPanel = ({ selectedWords, selectedImages, selectedCount, revealedPa
             title={darkMode ? "Modo claro" : "Modo oscuro"}
           >
             {darkMode ? '☀️' : '🌙'}
-          </button>
-
-          <button
-            className="btn btn-fullscreen"
-            onClick={handleToggleFullscreen}
-            title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
-          >
-            {isFullscreen ? '🗗' : '⛶'}
-          </button>
-
-          <button
-            className="btn btn-close"
-            onClick={handleCloseApp}
-            title="Cerrar aplicación"
-          >
-            ✕
           </button>
         </div>
       </div>

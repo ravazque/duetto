@@ -166,43 +166,6 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
-.btn-fullscreen {
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-  color: var(--text-light);
-  min-width: clamp(50px, 5vw, 70px);
-  font-size: var(--font-lg);
-  padding: var(--btn-padding-y) var(--spacing-sm);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.btn-fullscreen:hover {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(96, 165, 250, 0.4);
-}
-
-.btn-close {
-  background: linear-gradient(135deg, #f87171 0%, var(--color-danger) 100%);
-  color: var(--text-light);
-  min-width: clamp(50px, 5vw, 70px);
-  font-size: clamp(1.1rem, 1.3vw, 1.5rem);
-  padding: var(--btn-padding-y) var(--spacing-sm);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3);
-  font-weight: 700;
-}
-
-.btn-close:hover {
-  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
-}
-
 /* Breakpoint móvil */
 @media (max-width: 768px) {
   .control-panel {

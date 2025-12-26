@@ -203,30 +203,6 @@ body.dark-mode {
   box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
 }
 
-.dark-mode .btn-fullscreen {
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
-}
-
-.dark-mode .btn-fullscreen:hover {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(96, 165, 250, 0.4);
-}
-
-.dark-mode .btn-close {
-  background: linear-gradient(135deg, #f87171 0%, var(--color-danger) 100%);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3);
-}
-
-.dark-mode .btn-close:hover {
-  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
-}
-
 .dark-mode .revealed-pairs-count {
   color: #e0e0ff;
   background: rgba(50, 50, 70, 0.5);
