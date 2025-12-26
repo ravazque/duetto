@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import Card from './Card';
 import './Deck.css';
 
@@ -14,6 +14,27 @@ import './Deck.css';
 const Deck = ({ title, cards, onCardSelect, deckGridRef }) => {
   const localDeckGridRef = useRef(null);
   const gridRef = deckGridRef || localDeckGridRef;
+
+  // Añadir scroll horizontal con la rueda del ratón
+  useEffect(() => {
+    const gridElement = gridRef.current;
+    if (!gridElement) return;
+
+    const handleWheel = (e) => {
+      // Prevenir scroll vertical si hay scroll horizontal disponible
+      if (gridElement.scrollWidth > gridElement.clientWidth) {
+        e.preventDefault();
+        // Desplazar horizontalmente con la rueda del ratón
+        gridElement.scrollLeft += e.deltaY;
+      }
+    };
+
+    gridElement.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      gridElement.removeEventListener('wheel', handleWheel);
+    };
+  }, [gridRef]);
 
   return (
     <div className="deck">
