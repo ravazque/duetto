@@ -57,6 +57,30 @@ Antes de instalar Duetto, asegúrate de tener instalado:
 
 ### En Windows
 
+**📖 [Manual Completo de Instalación para Windows](INSTALL_WINDOWS.md)**
+
+**🚀 Instalación Rápida (Recomendada):**
+
+1. **Descargar o clonar el repositorio**
+   ```powershell
+   git clone <url-del-repositorio>
+   cd duetto
+   ```
+
+2. **Ejecutar el instalador automático**
+
+   Simplemente haz doble clic en `install-windows.bat` o desde la terminal:
+   ```powershell
+   .\install-windows.bat
+   ```
+
+   El script automáticamente:
+   - Verificará si Node.js está instalado
+   - Instalará todas las dependencias
+   - Te preguntará si quieres ejecutar la aplicación
+
+**⚙️ Instalación Manual:**
+
 1. **Instalar Node.js y npm**
 
    - Descarga el instalador de Node.js desde [nodejs.org](https://nodejs.org/)
@@ -80,6 +104,8 @@ Antes de instalar Duetto, asegúrate de tener instalado:
    ```powershell
    npm install
    ```
+
+**💡 Para instrucciones detalladas, solución de problemas y más opciones, consulta [INSTALL_WINDOWS.md](INSTALL_WINDOWS.md)**
 
 ## Uso
 
@@ -160,23 +186,28 @@ duetto/
 
 ## Solución de Problemas
 
+**⚠️ Para usuarios de Windows:** Consulta la [Guía Completa de Solución de Problemas para Windows](INSTALL_WINDOWS.md#solución-de-problemas) que incluye soluciones detalladas para errores comunes en Windows.
+
 ### Error: "command not found: npm" o "npm no se reconoce"
 
 - Verifica que Node.js esté instalado correctamente: `node --version`
 - Asegúrate de que npm esté en el PATH del sistema
 - Reinicia tu terminal o computadora
+- **Windows:** Ver [soluciones específicas para Windows](INSTALL_WINDOWS.md#error-node-no-se-reconoce-como-un-comando-interno-o-externo)
 
 ### Error durante `npm install`
 
 - Intenta limpiar la caché de npm: `npm cache clean --force`
 - Elimina la carpeta `node_modules` y el archivo `package-lock.json`, luego vuelve a ejecutar `npm install`
 - Verifica tu conexión a internet
+- **Windows:** Ejecuta el script `install-windows.bat` que maneja automáticamente estos problemas
 
 ### La aplicación Electron no se inicia
 
 - Asegúrate de que todas las dependencias estén instaladas: `npm install`
 - Verifica que el puerto 3000 no esté siendo usado por otra aplicación
 - Revisa la consola para mensajes de error específicos
+- **Windows:** Ver [diagnóstico completo en la guía de Windows](INSTALL_WINDOWS.md#la-aplicación-electron-no-se-abre-o-se-cierra-inmediatamente)
 
 ## Licencia
 
