@@ -78,21 +78,21 @@ const ControlPanel = ({ selectedWords, selectedImages, selectedCount, revealedPa
             {darkMode ? '☀️' : '🌙'}
           </button>
 
-          <button
+          {/* <button
             className="btn btn-fullscreen"
             onClick={handleToggleFullscreen}
             title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
           >
             {isFullscreen ? '🗗' : '⛶'}
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             className="btn btn-close"
             onClick={handleCloseApp}
             title="Cerrar aplicación"
           >
             ✕
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
