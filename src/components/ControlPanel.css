@@ -203,6 +203,44 @@
   box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
 }
 
+.btn-zoom {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: var(--text-light);
+  min-width: clamp(50px, 5vw, 70px);
+  font-size: var(--font-md);
+  padding: var(--btn-padding-y) var(--spacing-sm);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.btn-zoom:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+.btn-zoom:disabled {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-window {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: var(--text-light);
+  min-width: clamp(50px, 5vw, 70px);
+  font-size: var(--font-lg);
+  padding: var(--btn-padding-y) var(--spacing-sm);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.btn-window:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+}
+
 /* Breakpoint móvil */
 @media (max-width: 768px) {
   .control-panel {

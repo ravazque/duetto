@@ -1,4 +1,6 @@
 import React from 'react';
+import { CARD_TYPE_INDICATORS } from '../constants/uiTexts';
+import { CARD_STATES } from '../constants/gameConfig';
 import './Card.css';
 
 /**
@@ -15,7 +17,7 @@ import './Card.css';
 const Card = ({ card, onSelect }) => {
   const handleClick = () => {
     // Solo permitir selección si está boca abajo o ya seleccionada
-    if (card.state === 'faceDown' || card.state === 'selected') {
+    if (card.state === CARD_STATES.FACE_DOWN || card.state === CARD_STATES.SELECTED) {
       onSelect(card.id);
     }
   };
@@ -30,7 +32,7 @@ const Card = ({ card, onSelect }) => {
         <div className="card-back">
           <div className="card-pattern">
             <span className="card-type-indicator">
-              {card.type === 'word' ? 'P' : 'I'}
+              {card.type === 'word' ? CARD_TYPE_INDICATORS.WORD : CARD_TYPE_INDICATORS.IMAGE}
             </span>
           </div>
         </div>
@@ -57,7 +59,7 @@ const Card = ({ card, onSelect }) => {
       </div>
 
       {/* Indicador visual de selección */}
-      {card.state === 'selected' && (
+      {card.state === CARD_STATES.SELECTED && (
         <div className="selection-indicator">✓</div>
       )}
     </div>

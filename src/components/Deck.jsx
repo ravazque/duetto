@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import Card from './Card';
 import './Deck.css';
 
@@ -14,6 +14,31 @@ import './Deck.css';
 const Deck = ({ title, cards, onCardSelect, deckGridRef }) => {
   const localDeckGridRef = useRef(null);
   const gridRef = deckGridRef || localDeckGridRef;
+
+  // Implementar scroll horizontal con rueda del ratón
+  useEffect(() => {
+    const deckElement = gridRef.current;
+    if (!deckElement) return;
+
+    const handleWheel = (e) => {
+      // Prevenir scroll vertical de la página
+      e.preventDefault();
+
+      // Scroll horizontal con la rueda del ratón
+      // deltaY es positivo cuando se hace scroll hacia abajo
+      // deltaX es positivo cuando se hace scroll hacia la derecha
+      const scrollAmount = e.deltaY || e.deltaX;
+      deckElement.scrollLeft += scrollAmount;
+    };
+
+    // Agregar listener con passive: false para poder prevenir el comportamiento por defecto
+    deckElement.addEventListener('wheel', handleWheel, { passive: false });
+
+    // Cleanup: remover listener cuando el componente se desmonte
+    return () => {
+      deckElement.removeEventListener('wheel', handleWheel);
+    };
+  }, [gridRef]);
 
   return (
     <div className="deck">

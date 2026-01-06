@@ -1,33 +1,30 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { WINDOW_CONFIG, WEB_PREFERENCES, DEV_CONFIG, PATHS } = require('./electron.config');
 const isDev = process.env.NODE_ENV === 'development';
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 900,
-    minWidth: 800,
-    minHeight: 600,
-    frame: false, // Elimina los botones de cerrar, minimizar y agrandar
+    ...WINDOW_CONFIG,
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      enableRemoteModule: false,
-      preload: path.join(__dirname, 'preload.js')
+      ...WEB_PREFERENCES,
+      preload: path.join(__dirname, PATHS.preload)
     },
-    icon: path.join(__dirname, 'build', 'icon.png'),
+    icon: path.join(__dirname, PATHS.icon),
     title: 'Duetto'
   });
 
   // Cargar la aplicación
   if (isDev) {
     // En desarrollo, cargar desde el servidor de Vite
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL(DEV_CONFIG.devServerURL);
     // Abrir DevTools en desarrollo
-    mainWindow.webContents.openDevTools();
+    if (DEV_CONFIG.openDevTools) {
+      mainWindow.webContents.openDevTools();
+    }
   } else {
     // En producción, cargar el archivo index.html compilado
-    mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
+    mainWindow.loadFile(path.join(__dirname, PATHS.distIndex));
   }
 
   // Opcional: Menú personalizado o sin menú
@@ -46,6 +43,20 @@ function setupIpcHandlers(mainWindow) {
     const isFullscreen = mainWindow.isFullScreen();
     mainWindow.setFullScreen(!isFullscreen);
     mainWindow.webContents.send('fullscreen-changed', !isFullscreen);
+  });
+
+  // Maximizar ventana
+  ipcMain.on('maximize', () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+    } else {
+      mainWindow.maximize();
+    }
+  });
+
+  // Minimizar ventana
+  ipcMain.on('minimize', () => {
+    mainWindow.minimize();
   });
 
   // Cerrar aplicación

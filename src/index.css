@@ -88,6 +88,9 @@
   --btn-padding-x: clamp(14px, max(1.4vw, 1.8vh), 28px);
   --btn-min-width: clamp(90px, max(9vw, 12vh), 160px);
   --btn-font: clamp(0.8rem, max(0.9vw, 1.2vh), 1.1rem);
+
+  /* Zoom de la aplicación */
+  --app-zoom: 1.0;
 }
 
 /* Reset y estilos globales */
@@ -111,6 +114,8 @@ body {
   margin: 0 auto;
   padding-bottom: var(--spacing-lg);
   overflow-x: hidden;
+  transform: scale(var(--app-zoom));
+  transform-origin: top center;
 }
 
 /* Tipografía */

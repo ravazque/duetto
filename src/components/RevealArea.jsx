@@ -1,4 +1,5 @@
 import React from 'react';
+import { UI_MESSAGES } from '../constants/uiTexts';
 import './RevealArea.css';
 
 /**
@@ -33,8 +34,8 @@ const RevealArea = ({ wordCard, imageCard, animationKey }) => {
           </div>
         ) : (
           <div className="reveal-placeholder">
-            <div className="placeholder-icon">🎴</div>
-            <p>Selecciona 1 carta de cada mazo</p>
+            <div className="placeholder-icon">{UI_MESSAGES.REVEAL_PLACEHOLDER_ICON}</div>
+            <p>{UI_MESSAGES.SELECT_CARDS_PLACEHOLDER}</p>
           </div>
         )}
       </div>

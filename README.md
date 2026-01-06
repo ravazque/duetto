@@ -1,218 +1,123 @@
-# Duetto
+# Duetto - Aplicación de Cartas Proyectivas
 
-Aplicación de cartas proyectivas para terapia desarrollada con Electron y React.
+**Versión:** 1.4.0  
+**Estado:** ✅ Production Ready  
+**Última actualización:** 2026-01-06
 
-## Requisitos Previos
+---
 
-Antes de instalar Duetto, asegúrate de tener instalado:
+## 📋 Descripción
 
-- **Node.js** (versión 18 o superior recomendada)
-- **npm** (viene incluido con Node.js)
+Duetto es una aplicación de cartas proyectivas para terapia y autoconocimiento, inspirada en las OH Cards. Combina palabras e imágenes para facilitar procesos terapéuticos y exploración emocional.
 
-## Instalación
+---
 
-### En Linux
+## ✨ Características
 
-1. **Instalar Node.js y npm**
+- 🎴 **88 cartas de palabras** con conceptos cuidadosamente seleccionados
+- 🖼️ **88 cartas de imágenes** con símbolos visuales proyectivos
+- 🎨 **Modo oscuro/claro** con persistencia
+- 🔍 **Sistema de zoom** (6 niveles: 0.6x - 1.8x)
+- 🖱️ **Scroll horizontal con rueda** del ratón
+- 🪟 **Controles de ventana** (Electron)
+- ✨ **Animaciones fluidas** con timing configurables
+- 🧪 **127 tests unitarios** con ~95% de cobertura
 
-   **Ubuntu/Debian:**
-   ```bash
-   sudo apt update
-   sudo apt install nodejs npm
-   ```
+---
 
-   **Fedora:**
-   ```bash
-   sudo dnf install nodejs npm
-   ```
+## 🚀 Instalación y Uso
 
-   **Arch Linux:**
-   ```bash
-   sudo pacman -S nodejs npm
-   ```
+Ver **INSTALL_WINDOWS.md** para instalación detallada en Windows.
 
-   **Alternativa (recomendada) - Usando nvm:**
-   ```bash
-   # Instalar nvm
-   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+### Comandos Rápidos
+\`\`\`bash
+npm install          # Instalar dependencias
+npm run dev          # Desarrollo web
+npm run electron     # Ejecutar Electron
+npm test             # Ejecutar tests
+npm run build        # Build producción
+\`\`\`
 
-   # Reiniciar terminal o ejecutar:
-   source ~/.bashrc
+---
 
-   # Instalar Node.js
-   nvm install 18
-   nvm use 18
-   ```
+## 📚 Documentación
 
-2. **Clonar el repositorio (si aplica)**
-   ```bash
-   git clone <url-del-repositorio>
-   cd duetto
-   ```
+- **README.md** - Este archivo
+- **INSTALL_WINDOWS.md** - Instalación en Windows
+- **SPRINT2_REFACTORIZACIÓN.md** - Arquitectura y refactorización
+- **SPRINT3_COMPLETADO.md** - Sprint 3: División de hooks y eliminación de deuda técnica
+- **ANALISIS_DEUDA_TECNICA_FINAL.md** - Análisis técnico detallado
+- **REFACTORING_USE_PERSISTED_STATE.md** - Hook genérico de persistencia
+- **CHANGELOG_MEJORAS.md** - Historial de cambios
 
-3. **Instalar dependencias**
-   ```bash
-   npm install
-   ```
+---
 
-### En Windows
+## 🏗️ Arquitectura
 
-**📖 [Manual Completo de Instalación para Windows](INSTALL_WINDOWS.md)**
+### Tecnologías
+- React 18 + Vite
+- Electron 39
+- Vitest + React Testing Library
+- Context API + Custom Hooks
 
-**🚀 Instalación Rápida (Recomendada):**
+### Estructura
+\`\`\`
+src/
+├── App.jsx              # Componente principal (129 líneas)
+├── hooks/               # 11 custom hooks (arquitectura modular SOLID)
+│   ├── useCardsState, useRevealState, useDeckRefs, useCardSelection
+│   ├── useCardAnimation, useCardReset
+│   ├── useTheme, useZoom, usePersistedState
+│   └── useElectronAPI
+├── components/          # 5 componentes visuales
+├── contexts/            # ThemeContext
+├── utils/               # Utilidades puras (100% testeadas)
+└── constants/           # Configuración centralizada
+\`\`\`
 
-1. **Descargar o clonar el repositorio**
-   ```powershell
-   git clone <url-del-repositorio>
-   cd duetto
-   ```
+Ver **SPRINT2_REFACTORIZACIÓN.md** para detalles completos.
 
-2. **Ejecutar el instalador automático**
+---
 
-   Simplemente haz doble clic en `install-windows.bat` o desde la terminal:
-   ```powershell
-   .\install-windows.bat
-   ```
+## 🧪 Testing
 
-   El script automáticamente:
-   - Verificará si Node.js está instalado
-   - Instalará todas las dependencias
-   - Te preguntará si quieres ejecutar la aplicación
+- **127 tests** pasando (100%)
+- **~95% cobertura** en utilidades y hooks
+- Framework: Vitest + React Testing Library
+- **0 deuda técnica crítica**
 
-**⚙️ Instalación Manual:**
+\`\`\`bash
+npm test              # Ejecutar tests
+npm run test:coverage # Reporte de cobertura
+\`\`\`
 
-1. **Instalar Node.js y npm**
+---
 
-   - Descarga el instalador de Node.js desde [nodejs.org](https://nodejs.org/)
-   - Ejecuta el instalador (.msi) y sigue las instrucciones
-   - Asegúrate de marcar la opción "Add to PATH" durante la instalación
-   - Reinicia tu terminal después de la instalación
+## 📊 Métricas
 
-   Para verificar la instalación, abre PowerShell o CMD y ejecuta:
-   ```powershell
-   node --version
-   npm --version
-   ```
+| Métrica | Valor |
+|---------|-------|
+| Tests unitarios | 127 |
+| Cobertura | ~95% |
+| Líneas App.jsx | 129 (-48% vs original) |
+| Custom hooks | 11 |
+| Deuda técnica crítica | 0 |
+| Bundle size (gzip) | 50.49 KB |
 
-2. **Clonar el repositorio (si aplica)**
-   ```powershell
-   git clone <url-del-repositorio>
-   cd duetto
-   ```
+---
 
-3. **Instalar dependencias**
-   ```powershell
-   npm install
-   ```
+## 🔧 Configuración
 
-**💡 Para instrucciones detalladas, solución de problemas y más opciones, consulta [INSTALL_WINDOWS.md](INSTALL_WINDOWS.md)**
+La aplicación persiste automáticamente:
+- Modo oscuro/claro
+- Nivel de zoom
 
-## Uso
+---
 
-### Modo Desarrollo
-
-Para ejecutar la aplicación en modo desarrollo:
-
-**Linux/macOS:**
-```bash
-npm run electron
-```
-
-**Windows:**
-```powershell
-npm run electron
-```
-
-Esto iniciará el servidor de desarrollo de Vite y abrirá la aplicación Electron automáticamente.
-
-### Solo Frontend (sin Electron)
-
-Si solo quieres trabajar en el frontend:
-
-```bash
-npm run dev
-```
-
-Luego abre tu navegador en `http://localhost:3000`
-
-## Construcción de la Aplicación
-
-Para crear un ejecutable de la aplicación:
-
-### Linux
-```bash
-npm run electron:build:linux
-```
-
-Esto generará un archivo AppImage en la carpeta `release/`.
-
-### Windows
-```bash
-npm run electron:build:win
-```
-
-Esto generará un instalador NSIS (.exe) en la carpeta `release/`.
-
-### macOS
-```bash
-npm run electron:build:mac
-```
-
-Esto generará un archivo DMG en la carpeta `release/`.
-
-## Estructura del Proyecto
-
-```
-duetto/
-├── src/           # Código fuente de React
-├── dist/          # Build de producción
-├── build/         # Recursos para el builder (iconos, etc.)
-├── release/       # Ejecutables generados
-├── electron.js    # Proceso principal de Electron
-├── index.html     # HTML principal
-└── package.json   # Dependencias y scripts
-```
-
-## Scripts Disponibles
-
-- `npm run dev` - Inicia el servidor de desarrollo de Vite
-- `npm run build` - Construye el proyecto para producción
-- `npm run preview` - Vista previa del build de producción
-- `npm run electron` - Ejecuta la aplicación en modo desarrollo
-- `npm run electron:build` - Construye la aplicación para la plataforma actual
-- `npm run electron:build:win` - Construye para Windows
-- `npm run electron:build:mac` - Construye para macOS
-- `npm run electron:build:linux` - Construye para Linux
-
-## Solución de Problemas
-
-**⚠️ Para usuarios de Windows:** Consulta la [Guía Completa de Solución de Problemas para Windows](INSTALL_WINDOWS.md#solución-de-problemas) que incluye soluciones detalladas para errores comunes en Windows.
-
-### Error: "command not found: npm" o "npm no se reconoce"
-
-- Verifica que Node.js esté instalado correctamente: `node --version`
-- Asegúrate de que npm esté en el PATH del sistema
-- Reinicia tu terminal o computadora
-- **Windows:** Ver [soluciones específicas para Windows](INSTALL_WINDOWS.md#error-node-no-se-reconoce-como-un-comando-interno-o-externo)
-
-### Error durante `npm install`
-
-- Intenta limpiar la caché de npm: `npm cache clean --force`
-- Elimina la carpeta `node_modules` y el archivo `package-lock.json`, luego vuelve a ejecutar `npm install`
-- Verifica tu conexión a internet
-- **Windows:** Ejecuta el script `install-windows.bat` que maneja automáticamente estos problemas
-
-### La aplicación Electron no se inicia
-
-- Asegúrate de que todas las dependencias estén instaladas: `npm install`
-- Verifica que el puerto 3000 no esté siendo usado por otra aplicación
-- Revisa la consola para mensajes de error específicos
-- **Windows:** Ver [diagnóstico completo en la guía de Windows](INSTALL_WINDOWS.md#la-aplicación-electron-no-se-abre-o-se-cierra-inmediatamente)
-
-## Licencia
+## 📝 Licencia
 
 [Especificar licencia]
 
-## Autor
+---
 
-Duetto
+_Última actualización: 2026-01-06_

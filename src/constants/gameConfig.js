@@ -12,9 +12,7 @@ export const CARD_STATES = {
 
 // Keys para localStorage
 export const STORAGE_KEYS = {
-  DARK_MODE: 'darkMode',
-  WORD_CARDS: 'wordCards',     // Deprecated - ya no se usa
-  IMAGE_CARDS: 'imageCards'    // Deprecated - ya no se usa
+  DARK_MODE: 'darkMode'
 };
 
 // Reglas del juego
