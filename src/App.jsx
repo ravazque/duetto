@@ -5,6 +5,26 @@ import RevealArea from './components/RevealArea';
 import { wordCards, imageCards } from './data/cardsData';
 import './App.css';
 
+// Constantes
+import {
+  MOVE_TO_END_DURATION,
+  REVEAL_COMPLETE_DELAY,
+  FLIP_TO_FACEDOWN_DELAY,
+  SHUFFLE_UNLOCK_DELAY
+} from './constants/animations';
+import { CARD_STATES, STORAGE_KEYS } from './constants/gameConfig';
+
+// Utilidades
+import {
+  initializeCards,
+  flipAllToFaceDown,
+  toggleCardSelection,
+  updateCardsByPredicate,
+  moveCardsToEnd
+} from './utils/cardTransformers';
+import { getSelectedCard, getSelectedCount } from './utils/cardSelectors';
+import { shuffleCards } from './utils/array';
+
 /**
  * Componente principal de la aplicación
  *
@@ -19,12 +39,12 @@ function App() {
   // Las cartas son fijas desde cardsData.js, no se cargan desde localStorage
   const loadSavedCards = () => {
     // Limpiar localStorage de cartas antiguas (solo se ejecuta una vez)
-    localStorage.removeItem('wordCards');
-    localStorage.removeItem('imageCards');
+    localStorage.removeItem(STORAGE_KEYS.WORD_CARDS);
+    localStorage.removeItem(STORAGE_KEYS.IMAGE_CARDS);
 
     return {
-      words: wordCards.map(card => ({ ...card, state: 'faceDown' })),
-      images: imageCards.map(card => ({ ...card, state: 'faceDown' }))
+      words: initializeCards(wordCards),
+      images: initializeCards(imageCards)
     };
   };
 
@@ -37,7 +57,7 @@ function App() {
   const [revealedPairs, setRevealedPairs] = useState(0); // Contador de parejas reveladas
   const [darkMode, setDarkMode] = useState(() => {
     // Cargar preferencia de modo oscuro desde localStorage
-    const saved = localStorage.getItem('darkMode');
+    const saved = localStorage.getItem(STORAGE_KEYS.DARK_MODE);
     return saved ? JSON.parse(saved) : false;
   });
   const [isShuffling, setIsShuffling] = useState(false); // Controla si está en proceso de mezclar
@@ -48,7 +68,7 @@ function App() {
 
   // Guardar preferencia de modo oscuro
   useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    localStorage.setItem(STORAGE_KEYS.DARK_MODE, JSON.stringify(darkMode));
     // Aplicar clase al body
     if (darkMode) {
       document.body.classList.add('dark-mode');
@@ -75,46 +95,9 @@ function App() {
       return;
     }
 
-    // Función auxiliar para actualizar el estado de una carta específica
-    const updateCardState = (cards) => {
-      // Verificar si la carta clickeada pertenece a este mazo
-      const clickedCard = cards.find(c => c.id === cardId);
-
-      if (!clickedCard) {
-        return cards; // No pertenece a este mazo
-      }
-
-      // No permitir seleccionar cartas volteadas
-      if (clickedCard.state === 'flipped') {
-        return cards;
-      }
-
-      // Si la carta clickeada está siendo deseleccionada
-      if (clickedCard.state === 'selected') {
-        return cards.map((card) => {
-          if (card.id === cardId) {
-            return { ...card, state: 'faceDown' };
-          }
-          return card;
-        });
-      }
-
-      // Si la carta clickeada está faceDown, deseleccionar todas las demás
-      // y seleccionar solo esta
-      return cards.map((card) => {
-        if (card.id === cardId && card.state === 'faceDown') {
-          return { ...card, state: 'selected' };
-        } else if (card.state === 'selected') {
-          // Deseleccionar cualquier otra carta seleccionada
-          return { ...card, state: 'faceDown' };
-        }
-        return card;
-      });
-    };
-
-    // Actualizar ambos mazos
-    setWords(updateCardState);
-    setImages(updateCardState);
+    // Actualizar ambos mazos usando la utilidad toggleCardSelection
+    setWords(cards => toggleCardSelection(cards, cardId) || cards);
+    setImages(cards => toggleCardSelection(cards, cardId) || cards);
   };
 
   /**
@@ -126,46 +109,39 @@ function App() {
     setIsRevealing(true);
 
     // Encontrar las cartas seleccionadas
-    const selectedWord = words.find(card => card.state === 'selected');
-    const selectedImage = images.find(card => card.state === 'selected');
+    const selectedWord = getSelectedCard(words);
+    const selectedImage = getSelectedCard(images);
 
-    // PASO 1: Primero mover las cartas al final (sin voltear aún) para que se vea el movimiento
-    const moveToEnd = (cards) => {
-      // Marcar cartas seleccionadas como "moving-to-end" (aún no volteadas)
-      const updatedCards = cards.map(card =>
-        card.state === 'selected' ? { ...card, state: 'moving-to-end' } : card
+    // PASO 1: Marcar cartas como "moving-to-end" y moverlas al final
+    const markAndMove = (cards) => {
+      const marked = updateCardsByPredicate(
+        cards,
+        card => card.state === CARD_STATES.SELECTED,
+        CARD_STATES.MOVING_TO_END
       );
-
-      // Separar en grupos: no seleccionadas y seleccionadas
-      const notMoving = updatedCards.filter(card => card.state !== 'moving-to-end');
-      const moving = updatedCards.filter(card => card.state === 'moving-to-end');
-
-      // Mover las seleccionadas al final
-      return [...notMoving, ...moving];
+      return moveCardsToEnd(marked, CARD_STATES.MOVING_TO_END);
     };
 
-    setWords(moveToEnd);
-    setImages(moveToEnd);
+    setWords(markAndMove);
+    setImages(markAndMove);
 
-    // PASO 2: Después de un pequeño delay, voltear las cartas y actualizar el área de revelación
+    // PASO 2: Después del movimiento, voltear las cartas y actualizar área de revelación
     setTimeout(() => {
       // Voltear las cartas que están en moving-to-end
-      const flipCards = (cards) => {
-        return cards.map(card =>
-          card.state === 'moving-to-end' ? { ...card, state: 'flipped' } : card
-        );
-      };
-
-      setWords(flipCards);
-      setImages(flipCards);
+      setWords(cards => updateCardsByPredicate(
+        cards,
+        card => card.state === CARD_STATES.MOVING_TO_END,
+        CARD_STATES.FLIPPED
+      ));
+      setImages(cards => updateCardsByPredicate(
+        cards,
+        card => card.state === CARD_STATES.MOVING_TO_END,
+        CARD_STATES.FLIPPED
+      ));
 
       // Mover las cartas al área de revelación
-      if (selectedWord) {
-        setRevealedWordCard(selectedWord);
-      }
-      if (selectedImage) {
-        setRevealedImageCard(selectedImage);
-      }
+      if (selectedWord) setRevealedWordCard(selectedWord);
+      if (selectedImage) setRevealedImageCard(selectedImage);
 
       // Incrementar contador de parejas reveladas
       setRevealedPairs(prev => prev + 1);
@@ -173,12 +149,11 @@ function App() {
       // Incrementar key para forzar re-animación
       setRevealKey(prev => prev + 1);
 
-      // PASO 3: Desbloquear el botón de mezclar después de que termine la animación de revelación
-      // La animación de revelación dura 600ms (ver RevealArea.css)
+      // PASO 3: Desbloquear UI después de que termine la animación de revelación
       setTimeout(() => {
         setIsRevealing(false);
-      }, 700); // 700ms para asegurar que la animación haya terminado
-    }, 400); // Delay para que se vea el movimiento al final
+      }, REVEAL_COMPLETE_DELAY);
+    }, MOVE_TO_END_DURATION);
   };
 
   /**
@@ -194,45 +169,27 @@ function App() {
     setRevealedPairs(0);
 
     // PASO 1: Voltear todas las cartas a faceDown (con animación)
-    const flipToFaceDown = (cards) => {
-      return cards.map((card) => ({
-        ...card,
-        state: 'faceDown'
-      }));
-    };
+    setWords(flipAllToFaceDown);
+    setImages(flipAllToFaceDown);
 
-    setWords(flipToFaceDown);
-    setImages(flipToFaceDown);
-
-    // PASO 2: Esperar a que termine la animación de volteo (600ms) y luego mezclar
+    // PASO 2: Esperar a que termine la animación de volteo y luego mezclar
     setTimeout(() => {
-      const shuffleCards = (cards) => {
-        // Mezclar usando algoritmo Fisher-Yates
-        const shuffled = [...cards];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-
-        return shuffled;
-      };
-
       setWords(shuffleCards);
       setImages(shuffleCards);
 
       // PASO 3: Desbloquear selección después del mezclado
       setTimeout(() => {
         setIsShuffling(false);
-      }, 100);
-    }, 650); // Esperar 650ms para que termine la animación de volteo (600ms de transición)
+      }, SHUFFLE_UNLOCK_DELAY);
+    }, FLIP_TO_FACEDOWN_DELAY);
   };
 
   // Las cartas son fijas, no se permite edición desde la interfaz
   // handleUpdateCards eliminado ya que no se necesita
 
   // Calcular cartas seleccionadas por mazo
-  const selectedWords = words.filter((card) => card.state === 'selected').length;
-  const selectedImages = images.filter((card) => card.state === 'selected').length;
+  const selectedWords = getSelectedCount(words);
+  const selectedImages = getSelectedCount(images);
   const selectedCount = selectedWords + selectedImages;
 
   return (
