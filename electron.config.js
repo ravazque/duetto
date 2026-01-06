@@ -14,7 +14,8 @@ const WINDOW_CONFIG = {
 const WEB_PREFERENCES = {
   nodeIntegration: false,
   contextIsolation: true,
-  enableRemoteModule: false
+  enableRemoteModule: false,
+  sandbox: false  // Deshabilitar sandbox para evitar problemas en Linux
 };
 
 const DEV_CONFIG = {

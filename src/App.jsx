@@ -33,7 +33,7 @@ function App() {
   const { zoomLevel, zoomIn, zoomOut, canZoomIn, canZoomOut } = useZoom();
 
   // Hook de Electron API
-  const { isElectron, isFullscreen, toggleFullscreen, maximize, minimize } = useElectronAPI();
+  const { isElectron, isFullscreen, toggleFullscreen, maximize, minimize, closeApp } = useElectronAPI();
 
   // Hooks de estado del juego (divididos por responsabilidad)
   const { words, images, setWords, setImages, updateBothDecks } = useCardsState();
@@ -79,31 +79,28 @@ function App() {
   return (
     <div className="app">
       <ControlPanel
+        selectedWords={selectedWordsCount}
+        selectedImages={selectedImagesCount}
+        revealedPairs={revealedPairs}
+        onFlipSelected={flipSelected}
+        onReset={resetCards}
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
-        onReveal={flipSelected}
-        onReset={resetCards}
-        canReveal={canReveal}
-        isRevealing={isRevealing}
-        isShuffling={isShuffling}
-        isElectron={isElectron}
-        isFullscreen={isFullscreen}
-        onToggleFullscreen={toggleFullscreen}
-        onMaximize={maximize}
-        onMinimize={minimize}
         zoomLevel={zoomLevel}
         onZoomIn={zoomIn}
         onZoomOut={zoomOut}
         canZoomIn={canZoomIn}
         canZoomOut={canZoomOut}
+        isShuffling={isShuffling}
+        isRevealing={isRevealing}
+        closeApp={closeApp}
       />
 
       <div className="main-content">
         <RevealArea
-          revealedWordCard={revealedWordCard}
-          revealedImageCard={revealedImageCard}
-          revealKey={revealKey}
-          revealedPairs={revealedPairs}
+          wordCard={revealedWordCard}
+          imageCard={revealedImageCard}
+          animationKey={revealKey}
         />
 
         <div className="decks-container" ref={decksContainerRef}>

@@ -36,15 +36,14 @@ const ControlPanel = ({
   canZoomIn,
   canZoomOut,
   isShuffling,
-  isRevealing
+  isRevealing,
+  closeApp
 }) => {
   // Hook de Electron API
   const {
     isFullscreen,
     toggleFullscreen,
-    maximize,
-    minimize,
-    closeApp
+    minimize
   } = useElectronAPI();
 
   return (
@@ -114,18 +113,18 @@ const ControlPanel = ({
 
           <button
             className="btn btn-window"
-            onClick={maximize}
-            title={TOOLTIPS.MAXIMIZE}
-          >
-            {BUTTON_LABELS.MAXIMIZE}
-          </button>
-
-          <button
-            className="btn btn-window"
             onClick={minimize}
             title={TOOLTIPS.MINIMIZE}
           >
             {BUTTON_LABELS.MINIMIZE}
+          </button>
+
+          <button
+            className="btn btn-close"
+            onClick={closeApp}
+            title={TOOLTIPS.CLOSE_APP}
+          >
+            {BUTTON_LABELS.CLOSE}
           </button>
         </div>
       </div>

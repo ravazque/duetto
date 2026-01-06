@@ -3,6 +3,13 @@ const path = require('path');
 const { WINDOW_CONFIG, WEB_PREFERENCES, DEV_CONFIG, PATHS } = require('./electron.config');
 const isDev = process.env.NODE_ENV === 'development';
 
+// Deshabilitar sandbox en Linux para evitar problemas de permisos
+if (process.platform === 'linux') {
+  app.commandLine.appendSwitch('no-sandbox');
+  app.commandLine.appendSwitch('disable-setuid-sandbox');
+  app.commandLine.appendSwitch('disable-dev-shm-usage');
+}
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
     ...WINDOW_CONFIG,

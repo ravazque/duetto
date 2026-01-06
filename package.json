@@ -41,6 +41,7 @@
   "build": {
     "appId": "com.duetto.app",
     "productName": "Duetto",
+    "afterPack": "scripts/afterPack.js",
     "files": [
       "dist/**/*",
       "electron.js",
@@ -69,7 +70,10 @@
         "AppImage"
       ],
       "icon": "build/icon.png",
-      "category": "Utility"
+      "category": "Utility",
+      "executableArgs": [
+        "--no-sandbox"
+      ]
     }
   }
 }
